@@ -1,0 +1,80 @@
+<?php
+/* SVN FILE: $Id: message_fixture.php 1607 2009-09-16 16:11:59Z ad7six $ */
+
+/**
+ * Short description for message_fixture.php
+ *
+ * Long description for message_fixture.php
+ *
+ * PHP versions 4 and 5
+ *
+ * Copyright (c) 2008, Andy Dawson
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @filesource
+ * @copyright            Copyright (c) 2008, Andy Dawson
+ * @link                 www.ad7six.com
+ * @package              cake-base
+ * @subpackage           cake-base.app.tests.fixtures
+ * @since                v 1.0
+ * @version              $Revision: 1607 $
+ * @modifiedBy           $LastChangedBy: ad7six $
+ * @lastModified         $Date: 2009-09-16 18:11:59 +0200 (Wed, 16 Sep 2009) $
+ * @license              http://www.opensource.org/licenses/mit-license.php The MIT License
+ */
+
+/**
+ * MessageFixture class
+ *
+ * @uses                 CakeTestFixture
+ * @package              cake-base
+ * @subpackage           cake-base.app.tests.fixtures
+ */
+class MessageFixture extends CakeTestFixture {
+
+/**
+ * name property
+ *
+ * @var string 'Message'
+ * @access public
+ */
+	var $name = 'Message';
+
+/**
+ * fields property
+ *
+ * @var array
+ * @access public
+ */
+	var $fields = array(
+		'id' => array('type' => 'integer', 'key' => 'primary'),
+		'random' => array('type' => 'integer', 'null' => false),
+		'name' => array('type' => 'string', 'null' => false),
+		'slug' => array('type' => 'string', 'null' => true),
+		'section' => array('type' => 'integer', 'null' => true),
+	);
+
+/**
+ * records property
+ *
+ * The records are created out of sequence so that theirs id are not sequncial.
+ * The order field values are used only in the list behavior test
+ *
+ * @var array
+ * @access public
+ */
+	var $records = array(
+		array('random' => 1, 'name' => 'First'),
+		array('random' => 10, 'name' => 'Tenth'),
+		array('random' => 4, 'name' => 'Fourth'),
+		array('random' => 8, 'name' => 'Eigth'),
+		array('random' => 5, 'name' => 'Fifth'),
+		array('random' => 7, 'name' => 'Seventh'),
+		array('random' => 3, 'name' => 'Third'),
+		array('random' => 9, 'name' => 'Ninth'),
+		array('random' => 2, 'name' => 'Second'),
+		array('random' => 6, 'name' => 'Sixth'),
+	);
+}

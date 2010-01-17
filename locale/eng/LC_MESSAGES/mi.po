@@ -1,0 +1,69 @@
+msgid   ""
+msgstr  "Project-Id-Version: \n"
+        "POT-Creation-Date: 2009-09-02 00:06+0200\n"
+        "PO-Revision-Date: 2009-05-22 12:25+0100\n"
+        "Last-Translator: Andy Dawson <andydawson76@yahoo.co.uk>\n"
+        "Language-Team: \n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=UTF-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+
+#: controllers/components/swiss_army.php:317
+msgid   "Invalid form submission"
+msgstr  ""
+
+#: controllers/components/swiss_army.php:324
+msgid   "Permission denied"
+msgstr  ""
+
+#: controllers/components/swiss_army.php:353
+msgid   "No action taken"
+msgstr  ""
+
+#: controllers/components/swiss_army.php:690
+msgid   "Welcome back %1$s."
+msgstr  ""
+
+#: controllers/components/swiss_army.php:960
+msgid   "No Parent"
+msgstr  ""
+
+#: vendors/shells/build.php:154
+msgid   "The javascript.pot file wasn't found - run cake mi_i18n to generate it"
+msgstr  ""
+
+#: vendors/shells/build.php:172
+msgid   "foo"
+msgstr  ""
+
+#: vendors/shells/cherry.php:73 vendors/shells/mi.php:118
+msgid   "Sorry, no specific help on that"
+msgstr  ""
+
+#: vendors/shells/mi.php:207;215
+msgid   "%1$s Results"
+msgstr  ""
+
+#: vendors/shells/mi.php:238;270
+msgid   "Enter a number from the list above, or 'q' to exit"
+msgstr  ""
+
+#: vendors/shells/mi.php:240;272;313
+msgid   "Exit"
+msgstr  ""
+
+#: vendors/shells/mi.php:244;276;317
+msgid   "Error:"
+msgstr  ""
+
+#: vendors/shells/mi.php:245;277
+msgid   "The number you selected was not an option. Please try again."
+msgstr  ""
+
+#: vendors/shells/mi.php:311
+msgid   "Make a selection, or 'q' to exit"
+msgstr  ""
+
+#: vendors/shells/mi.php:318
+msgid   "The option you supplied was empty, or not an option. Please try again."
+msgstr  ""

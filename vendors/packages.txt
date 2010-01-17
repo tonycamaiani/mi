@@ -1,0 +1,172 @@
+Package: mi-complete
+Type: virtual
+Section: utilities
+Description: Install all mi plugins and associated vendors
+Depends: mi, mi_acl, mi_asset, mi_development, mi_email, mi_enums, mi_media, mi_pages, mi_settings, mi_users, jquery, jquery-ui, simpletest, firephp, autotest, cakemate debug_kit
+
+Package: mi-server
+Type: virtual
+Section: utilities
+Description: Install mi plugins and associated vendors for a production or testing server
+Depends: mi, mi_acl, mi_asset, mi_development, mi_email, mi_enums, mi_media, mi_pages, mi_settings, mi_users, jquery, jquery-ui
+
+Package: mi-js
+Source: http://svn.assembla.com/svn/mi/branches/mi_js
+Type: vendor
+Section: javascript
+Description: Generic javascript utitily functions
+Recommends: mi, mi_asset
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi
+Source: http://svn.assembla.com/svn/mi/branches/mi_plugin
+Type: plugin
+Section: utilities
+Description: A collection of general utility classes
+ This plugin provides a number of components, behaviors and helpers which
+ other mi plugins rely upon.
+Recommends: mi_asset, mi_email, mi_media, mi_pages, mi_settings, mi_users
+Suggests: mi_acl, mi_development
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_acl
+Source: http://svn.assembla.com/svn/mi/branches/mi_acl
+Type: plugin
+Section: access_control
+Depends: mi
+Description: An administration interface for ACL data
+ An administrative plugin for Access Control List (ACL) data
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_asset
+Source: http://svn.assembla.com/svn/mi/branches/mi_asset
+Type: plugin
+Section: assets
+Depends: mi
+Description: Compression and handling functionality for css/js files
+ An administrative plugin for Access Control List (ACL) data
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_development
+Source: http://svn.assembla.com/svn/mi/branches/mi_development
+Type: plugin
+Section: development
+Depends: mi
+Recommends: debug_kit
+Enhances: debug_kit
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_email
+Source: http://svn.assembla.com/svn/mi/branches/mi_email
+Type: plugin
+Section: email
+Depends: mi
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_enums
+Source: http://svn.assembla.com/svn/mi/branches/mi_enums
+Type: plugin
+Section: misc
+Depends: mi
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_media
+Source: http://svn.assembla.com/svn/mi/branches/mi_media
+Type: plugin
+Section: media
+Depends: mi
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_pages
+Source: http://svn.assembla.com/svn/mi/branches/mi_pages
+Type: plugin
+Section: content_management
+Depends: mi
+Description: A plugin providing an administative web interface for managing
+ static pages. Can also be used to edit email templates, or in fact any view
+ file
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_settings
+Source: http://svn.assembla.com/svn/mi/branches/mi_settings
+Type: plugin
+Section: misc
+Depends: mi
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_tags
+Source: http://svn.assembla.com/svn/mi/branches/mi_tags
+Type: plugin
+Section: misc
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: mi_users
+Source: http://svn.assembla.com/svn/mi/branches/mi_users
+Type: plugin
+Section: user
+Depends: mi
+Bugs: http://thechaw.com/mi/tickets/add
+
+Package: autotest
+Source: git://github.com/AD7six/cake_autotest.git
+Type: plugin
+Section: development
+Bugs: http://github.com/rodrigorm/cake_autotest/issues
+
+Package: cakemate
+Source: git@thechaw.com:cakemate.git
+Type: plugin
+Section: development
+Bugs: http://thechaw.com/cakemate/tickets/add
+
+Package: debug_kit
+Source: git@thechaw.com:debug_kit.git
+Type: plugin
+Section: development
+Bugs: http://thechaw.com/debug_kit/tickets/add
+
+Package: firephp
+Source: http://firephp.googlecode.com/svn/trunk/FirePHPCore/lib/FirePHPCore
+Type: vendor
+Section: development
+
+Package: jquery
+Source: git://github.com/jquery/jquery.git
+PostInstallScript: cd jquery && make
+Type: vendor
+Section: javascript
+
+Package: jquery-form
+Source: git://github.com/malsup/form.git
+Type: vendor
+Section: javascript
+
+Package: jquery-blockUI
+Source: git://github.com/malsup/blockui.git
+Type: vendor
+Section: javascript
+
+Package: jquery-tokeninput
+Source: git://github.com/loopj/jQuery-Tokenizing-Autocomplete-Plugin.git
+Type: vendor
+Section: javascript
+
+Package: jquery-ui
+Source: http://jquery-ui.googlecode.com/svn/trunk
+Type: vendor
+Section: javascript
+
+Package: simpletest
+Source: https://simpletest.svn.sourceforge.net/svnroot/simpletest/simpletest/tags/1.0.1
+Type: vendor
+Section: development
+
+Package: media
+Source: git://github.com/davidpersson/media.git
+Type: plugin
+Section: media
+
+Package: html_cache
+Source: git://github.com/mcurry/html_cache.git
+Type: plugin
+Section: performance
