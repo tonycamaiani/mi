@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: seo.php 2080 2010-01-10 12:57:30Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for seo.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.controllers.components
  * @since         v 1.0
- * @version       $Revision: 2080 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2010-01-10 13:57:30 +0100 (Sun, 10 Jan 2010) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Core', 'Router');

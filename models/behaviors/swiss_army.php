@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: swiss_army.php 2033 2009-12-16 01:24:56Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for swiss_army.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.models.behaviors
  * @since         v 1.0
- * @version       $Revision: 2033 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2009-12-16 02:24:56 +0100 (Wed, 16 Dec 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
@@ -161,6 +161,29 @@ if (is_array($validator['rule'])) {
 		}
 		return current($Model->find('list', array('conditions' => array(
 			$Model->alias . '.' . $Model->primaryKey => $id))));
+	}
+
+/**
+ * findOrCreate method
+ *
+ * @param mixed $Model
+ * @param array $conditions array()
+ * @param array $params array()
+ * @return void
+ * @access public
+ */
+	function findOrCreate(&$Model, $conditions = array(), $params = array()) {
+		if (!$conditions) {
+			return false;
+		}
+		if (!isset($params['conditions'])) {
+			$params['conditions'] = $conditions;
+		}
+		if ($return = $Model->find('first', $params)) {
+			return $return;
+		}
+		$Model->create();
+		return $Model->save($conditions);
 	}
 
 /**

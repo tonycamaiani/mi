@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: mi_paginator.php 1752 2009-10-23 11:11:34Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for mi_paginator.php
@@ -19,9 +19,9 @@
  * @package       app
  * @subpackage    app.home.andy.www.apps.base.views.helpers
  * @since         v 1.0 (13-May-2009)
- * @version       $Revision: 1752 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2009-10-23 13:11:34 +0200 (Fri, 23 Oct 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Helper', 'Paginator');

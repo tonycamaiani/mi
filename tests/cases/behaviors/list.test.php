@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: list.test.php 1358 2009-07-28 09:41:06Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for list.test.php
@@ -19,9 +19,9 @@
  * @package              cake-base
  * @subpackage           cake-base.app.tests.cases.behaviors
  * @since                v 1.0
- * @version              $Revision: 1358 $
- * @modifiedBy           $LastChangedBy: AD7six $
- * @lastModified         $Date: 2009-07-28 11:41:06 +0200 (Tue, 28 Jul 2009) $
+ * @version              $Revision$
+ * @modifiedBy           $LastChangedBy$
+ * @lastModified         $Date$
  * @license              http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

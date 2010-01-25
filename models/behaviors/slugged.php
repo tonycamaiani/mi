@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: slugged.php 1711 2009-10-12 21:29:46Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for slugged.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.models.behaviors
  * @since         v 1.0
- * @version       $Revision: 1711 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2009-10-12 23:29:46 +0200 (Mon, 12 Oct 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

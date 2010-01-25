@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: tree.php 1358 2009-07-28 09:41:06Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Tree Helper.
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.views.helpers
  * @since         v 1.0
- * @version       $Revision: 1358 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2009-07-28 11:41:06 +0200 (Tue, 28 Jul 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

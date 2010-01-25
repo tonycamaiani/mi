@@ -73,7 +73,7 @@ class MiDbShell extends Shell {
 	protected $commands = array(
 		'mysql' => array(
 			'connection' => '--host=:host --port=:port --user=:login --password=:password --default-character-set=:encoding',
-			'standardOptions' => '--skip-create-options --set-charset -e',
+			'standardOptions' => '--set-charset -e',
 			'dump' => 'mysqldump :connection -d -R :standardOptions :extraOptions :database :table',
 			'dumpComplete' => 'mysqldump :connection -R :standardOptions :extraOptions :database :table',
 			'dumpCreate' => 'mysqldump :connection -d -R --add-drop-table :standardOptions :extraOptions :database :table',
@@ -82,6 +82,7 @@ class MiDbShell extends Shell {
 			'import' => 'mysql :connection :extraOptions --database=:database :table < :file',
 			'diff' => 'diff -u -w :from :to',
 			'stripAutoIncrement' => 'sed -i "s/ AUTO_INCREMENT=[0-9]\+//" :file',
+			'stripComments' => 'sed -i -e "/^--/d" -e "/^$/d" :file',
 		)
 	);
 
@@ -245,6 +246,7 @@ class MiDbShell extends Shell {
 		}
 		$this->_run('save', 'dump', null, $settings);
 		$this->stripAutoIncrement($settings);
+		$this->stripComments($settings);
 	}
 
 /**
@@ -255,7 +257,9 @@ class MiDbShell extends Shell {
  * @access public
  */
 	function stripAutoIncrement($settings = array()) {
-		if (empty($settings['toFile'])) {
+		if (!empty($settings['toFile'])) {
+			$file = $settings['toFile'];
+		} else {
 			if (isset($this->params['file'])) {
 				$file = $this->params['file'];
 			} elseif (!empty($this->args[0])) {
@@ -271,6 +275,34 @@ class MiDbShell extends Shell {
 		$settings['file'] = $file;
 		$settings['toFile'] = false;
 		$this->_run('strip auto increment', 'stripAutoIncrement', null, $settings);
+	}
+
+/**
+ * stripComments method
+ *
+ * @param array $settings array()
+ * @return void
+ * @access public
+ */
+	function stripComments($settings = array()) {
+		if (!empty($settings['toFile'])) {
+			$file = $settings['toFile'];
+		} else {
+			if (isset($this->params['file'])) {
+				$file = $this->params['file'];
+			} elseif (!empty($this->args[0])) {
+				$file = $this->args[0];
+			} else {
+				$file = CONFIGS . 'schema' . DS . $this->settings['connection'];
+				if (isset($this->args[0])) {
+					$file .= '_' . Inflector::underscore($this->args[0]);
+				}
+				$file .= '.sql';
+			}
+		}
+		$settings['file'] = $file;
+		$settings['toFile'] = false;
+		$this->_run('strip comments', 'stripComments', null, $settings);
 	}
 
 /**
@@ -350,11 +382,11 @@ class MiDbShell extends Shell {
 		$settings['return'] = true;
 		$result = $this->_run('diff', 'diff', false, $settings);
 		foreach($result as $i => $line) {
-			if (strpos('---', $line) === 0) {
+			if (strpos('-- ', $line) === 0) {
 				unset($result[$i]);
 			}
 		}
-		debug ($result);
+		debug ($result); //@ignore
 	}
 
 /**

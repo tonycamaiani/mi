@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: mi_html.php 1967 2009-12-01 23:05:05Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for mi_html.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.views.helpers
  * @since         v 1.0
- * @version       $Revision: 1967 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2009-12-02 00:05:05 +0100 (Wed, 02 Dec 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Helper', 'Html');
@@ -161,6 +161,10 @@ class MiHtmlHelper extends HtmlHelper {
  * @access public
  */
 	function link($title, $url = null, $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
+		if (!$escapeTitle) {
+			trigger_error('escapeTitle has been removed - use htmlAttributes[\'escape\'] instead');
+			$htmlAttributes['escape'] = false;
+		}
 		if (Configure::read() && $escapeTitle && strpos($title, '<span ') === 0) {
 			$escapeTitle = false;
 		}

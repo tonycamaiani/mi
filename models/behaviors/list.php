@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: list.php 2076 2010-01-08 14:00:14Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for list.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.models.behaviors
  * @since         v 1.0
- * @version       $Revision: 2076 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2010-01-08 15:00:14 +0100 (Fri, 08 Jan 2010) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: auto_format.php 2028 2009-12-13 20:35:27Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for auto_format.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.models.behaviors
  * @since         v 1.0
- * @version       $Revision: 2028 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2009-12-13 21:35:27 +0100 (Sun, 13 Dec 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

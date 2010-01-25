@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: mi.php 2060 2010-01-04 12:41:04Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for mi.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.vendors
  * @since         v 1.0
- * @version       $Revision: 2060 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2010-01-04 13:41:04 +0100 (Mon, 04 Jan 2010) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
@@ -161,7 +161,11 @@ class Mi {
 				}
 				$paths = am($vPaths, $paths);
 			}
-			$core = dirname(realpath(CAKE_CORE_INCLUDE_PATH . DS . 'cake' . DS . 'basics.php'));
+			$core = CAKE_CORE_INCLUDE_PATH . DS . 'cake' . DS . 'basics.php';
+			if ($_core = realpath($core)) {
+				$core = $_core;
+			}
+			$core = dirname($core);
 			foreach ($paths as $i => $path) {
 				if (strpos(realpath($path), $core) === 0 && !$includeCore) {
 					continue;
@@ -480,6 +484,7 @@ class Mi {
 				'helper' => 'views' . DS . 'helpers',
 				'vendors' => 'vendors',
 				'shells' => 'vendors' . DS . 'shells',
+				'tests' => 'tests' . DS . 'cases',
 			);
 			if (isset($partials[$type])) {
 				$partial = $partials[$type];
@@ -506,6 +511,8 @@ class Mi {
 			foreach ($vPaths as $path) {
 				array_unshift($paths, $path . 'shells' . DS);
 			}
+		} elseif ($type === 'test') {
+			$paths = array(APP . 'tests' . DS . 'cases');
 		}
 		if (!$paths) {
 			$paths = array(APP . low($type));
@@ -599,7 +606,7 @@ class Mi {
  * @return void
  * @access public
  */
-	function views($controllerName, $plugin = null, $excludePatterns = array('/admin.*/'), $nameOnly = true) {
+	public function views($controllerName, $plugin = null, $excludePatterns = array('/admin.*/'), $nameOnly = true) {
 		if (is_array($controllerName)) {
 			extract(am(array('controllerName' => null), $controllerName));
 		}
@@ -648,6 +655,30 @@ class Mi {
 			$params = compact('plugin', 'excludeFolders');
 		}
 		return Mi::all('Shell', $params);
+	}
+
+	public function tests($plugin = false, $params = array()) {
+	if (is_array($plugin)) {
+			$params = $plugin;
+		} else {
+			$params = am($params, compact('plugin'));
+		}
+		$paths = Mi::paths('Test');
+		$files = array();
+		foreach ($paths as $path) {
+			$files = Set::merge($files, Mi::files($path, null, '.*test.php'));
+		}
+		$return = array();
+		foreach ($files as $file) {
+			$name = preg_replace('@^.*[\\\/]cases[\\\/]@', '', $file);
+			$name = str_replace('.test.php', '', $name);
+			if (isset($return[$name])) {
+				continue;
+			}
+			$return[$name] = $file;
+		}
+		ksort($return);
+		return array_flip($return);
 	}
 
 /**

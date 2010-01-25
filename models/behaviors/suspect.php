@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: suspect.php 1781 2009-11-03 23:43:45Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for suspect.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.models.behaviors
  * @since         v 1.0
- * @version       $Revision: 1781 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2009-11-04 00:43:45 +0100 (Wed, 04 Nov 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

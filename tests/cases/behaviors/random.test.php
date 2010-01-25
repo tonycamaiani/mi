@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: random.test.php 1358 2009-07-28 09:41:06Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for random.test.php
@@ -19,9 +19,9 @@
  * @package              cake-base
  * @subpackage           cake-base.app.tests.cases.behaviors
  * @since                v 1.0
- * @version              $Revision: 1358 $
- * @modifiedBy           $LastChangedBy: AD7six $
- * @lastModified         $Date: 2009-07-28 11:41:06 +0200 (Tue, 28 Jul 2009) $
+ * @version              $Revision$
+ * @modifiedBy           $LastChangedBy$
+ * @lastModified         $Date$
  * @license              http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
@@ -75,7 +75,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testSetup() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$conditions = array('1 = 1');
 		$fields = array('id', 'random', 'name');
 		$this->Message->randomCache($conditions, 3);
@@ -119,7 +119,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testFindFirst() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$order = 'RAND()';
 		$conditions = array('1 = 1');
 		$fields = array('id', 'random', 'name');
@@ -136,7 +136,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testFirstPageFromOtherDirection() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$order = 'RAND()';
 		$conditions = array('1 = 1');
 		$fields = array('id', 'random', 'name');
@@ -192,7 +192,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testMostPageFromOtherDirection() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$order = 'RAND()';
 		$conditions = array('1 = 1');
 		$fields = array('id', 'random', 'name');
@@ -248,7 +248,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testPageInMiddle() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$order = 'RAND()';
 		$conditions = array('1 = 1');
 		$fields = array('id', 'random', 'name');
@@ -304,7 +304,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testPageInMiddleMostOther() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$order = 'RAND()';
 		$conditions = array('1 = 1');
 		$fields = array('id', 'random', 'name');
@@ -360,7 +360,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testFindNoLimit() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$order = 'RAND()';
 		$conditions = array('1 = 1');
 		$fields = array('id', 'random', 'name');
@@ -389,7 +389,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testRead() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$result = $this->Message->read(array('id', 'random', 'name'), 1);
 		$expected = array ('Message' => array ('id' => '1', 'random' => '1', 'name' => 'First'));
 		$this->assertIdentical($result, $expected);
@@ -402,7 +402,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testSave() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$this->Message->save(array('name' => 'Eleventh'));
 		$randomField = $this->Message->field('random');
 		$this->assertNotIdentical($randomField, 0);
@@ -415,7 +415,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testOverride() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 
 		$one = $this->Message->find('all', array('order' => 'RAND()'));
 		$two = $this->Message->find('all', array('order' => 'RAND()'));
@@ -440,7 +440,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testMaxRand() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$result = $this->Message->maxRand();
 		$this->assertIdentical($result, 20);
 	}
@@ -456,7 +456,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testFindDifferentResults() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		for ($i = 1; $i <= 100; $i++) {
 			$this->Message->create();
 			$this->Message->saveField('name', 'Test ' . str_pad($i, 3, '0', STR_PAD_LEFT));
@@ -502,7 +502,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testRandomValuesAreVaried() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		for ($i = 1; $i <= 100; $i++) {
 			$this->Message->create();
 			$this->Message->saveField('name', 'Test ' . str_pad($i, 3, '0', STR_PAD_LEFT));
@@ -534,7 +534,7 @@ class RandomTestCase extends CakeTestCase {
  * @access public
  */
 	function testAutoRandom() {
-		$this->Message =& new Message();
+		$this->Message = new Message();
 		$before = $this->Message->find('all', array('order' => 'id'));
 		$this->Message->Behaviors->Random->__destruct();
 

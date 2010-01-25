@@ -120,7 +120,7 @@ Section: development
 Bugs: http://thechaw.com/cakemate/tickets/add
 
 Package: debug_kit
-Source: git@thechaw.com:debug_kit.git
+Source: git://github.com/AD7six/debug_kit.git
 Type: plugin
 Section: development
 Bugs: http://thechaw.com/debug_kit/tickets/add

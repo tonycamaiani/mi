@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: mi_session.php 1766 2009-11-02 18:07:55Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for mi_session.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.controllers.components
  * @since         v 1.0
- * @version       $Revision: 1766 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2009-11-02 19:07:55 +0100 (Mon, 02 Nov 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

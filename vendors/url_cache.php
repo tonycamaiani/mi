@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: url_cache.php 2010 2009-12-11 18:01:37Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * A class for caching and speeding up router usage
@@ -19,9 +19,9 @@
  * @package       mi
  * @subpackage    mi.vendors
  * @since         v 1.0 (05-Jun-2009)
- * @version       $Revision: 2010 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2009-12-11 19:01:37 +0100 (Fri, 11 Dec 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Vendor', 'Mi.MiCache');

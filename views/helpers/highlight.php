@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: highlight.php 1756 2009-10-24 22:55:37Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for highlight.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.views.helpers
  * @since         v 1.0
- * @version       $Revision: 1756 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2009-10-25 00:55:37 +0200 (Sun, 25 Oct 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

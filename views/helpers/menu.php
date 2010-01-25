@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: menu.php 2082 2010-01-10 13:01:21Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for menu.php
@@ -19,9 +19,9 @@
  * @package       mi_plugin
  * @subpackage    mi_plugin.views.helpers
  * @since         v 1.0
- * @version       $Revision: 2082 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2010-01-10 14:01:21 +0100 (Sun, 10 Jan 2010) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
@@ -67,6 +67,7 @@ class MenuHelper extends AppHelper {
 	var $__defaultSettings = array(
 		'activeMode' => 'url', // url // controller[name] // action[and controller name] // false [do nothing]
 		'hereMode' => 'active', // active[mark the li as active] // text[no link just text] // false[do nothing]
+		'parentHereMode' => 'active', // active[mark the li as active] // text[no link just text] // false[do nothing]
 		'hereKey' => null, // the key for the item to mark as active automatic based on activeMode if not specified
 		'order' => null, // the order the whole section should be output. only used if generating many menus at once
 		'uniqueKey' => 'title', // determins how data is stored internally, and how duplicate items are detected
@@ -360,6 +361,7 @@ class MenuHelper extends AppHelper {
  * @return void
  */
 	function display($section = null, $settings = array(), $createEmpty = true) {
+		$this->setActive();
 		if (is_array($section)) {
 			extract(array_merge(array('section' => $this->__section), $section));
 		}
@@ -437,6 +439,10 @@ class MenuHelper extends AppHelper {
  * @access public
  */
 	function settings($section = null, $settings = array()) {
+		if (is_array($section)) {
+			$settings = $section;
+			$section = null;
+		}
 		if ($section === null) {
 			$section = $this->__section;
 		} elseif (!$section) {
@@ -462,6 +468,33 @@ class MenuHelper extends AppHelper {
 	       return $this->settings[$section];
 	}
 
+	function setActive($key = null, $section = null) {
+		if ($section === null) {
+			$section = $this->__section;
+		}
+		$settings = $this->settings($section);
+		if ($key) {
+			if (isset($this->__flatData[$section][$settings['hereKey']]['markActive'])) {
+				$this->__flatData[$section][$settings['hereKey']]['markActive'] = false;
+			}
+		} elseif (isset($settings['hereKey'])) {
+			$key = $settings['hereKey'];
+		} else {
+			return false;
+		}
+		$this->settings[$section]['hereKey'] = $key;
+		if (!isset($this->__flatData[$section][$key])) {
+			return false;
+		}
+		$this->__flatData[$section][$key]['markActive'] = true;
+		if ($settings['parentHereMode'] && $this->__flatData[$section][$key]['under']) {
+			$this->_setParentsActive(
+				$key,
+				$settings['parentHereMode'],
+				$this->__flatData[$section]
+			);
+		}
+	}
 /**
  * attributes method
  *
@@ -507,7 +540,10 @@ class MenuHelper extends AppHelper {
  */
 	function __menuItem($data) {
 		if ($data['markActive']) {
-			$this->addAttribute($this->settings[$this->__section]['itemTag'], 'class', 'active');
+			if ($data['markActive'] === true) {
+				$data['markActive'] = 'active';
+			}
+			$this->addAttribute($this->settings[$this->__section]['itemTag'], 'class', $data['markActive']);
 		}
 		if ($data['class']) {
 			$this->addAttribute($this->settings[$this->__section]['itemTag'], 'class', $data['class']);
@@ -563,7 +599,7 @@ class MenuHelper extends AppHelper {
 				}
 				$splitCounter++;
 			}
-			$contents = $this->menuItem($result);
+			$contents = $this->__menuItem($result);
 			$attributes = $this->__attributes($itemTag);
 			$return .= "$prefix\t<$itemTag{$attributes}>$contents";
 			if (!empty($result['children'])) {
@@ -632,6 +668,9 @@ class MenuHelper extends AppHelper {
 		if (!$view) {
 			return array(false, false, $url);
 		} elseif (isset($this->settings[$section]['hereKey'])) {
+			if ($this->settings[$section]['hereKey'] == $key) {
+				return array(true, true, $url);
+			}
 			return array(false, false, $url);
 		}
 		$here = $markActive = null;
@@ -681,6 +720,22 @@ class MenuHelper extends AppHelper {
 			}
 		}
 		return array($here, $markActive, $url);
+	}
+
+/**
+ * setParentsActive method
+ *
+ * @param mixed $key
+ * @param mixed $value
+ * @param mixed $data
+ * @return void
+ * @access protected
+ */
+	protected function _setParentsActive($key, $value, &$data) {
+		if (isset($data[$data[$key]['under']])) {
+			$data[$data[$key]['under']]['markActive'] = $value;
+			$this->_setParentsActive($data[$key]['under'], $value, $data);
+		}
 	}
 
 /**

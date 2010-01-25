@@ -1,4 +1,4 @@
-<?php /* SVN FILE: $Id: swiss_army.php 2093 2010-01-12 11:14:23Z AD7six $ */
+<?php /* SVN FILE: $Id$ */
 
 /**
  * Short description for swiss_army.php
@@ -18,9 +18,9 @@
  * @package       base
  * @subpackage    base.controllers.components
  * @since         v 1.0
- * @version       $Revision: 2093 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2010-01-12 12:14:23 +0100 (Tue, 12 Jan 2010) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
@@ -107,6 +107,13 @@ class SwissArmyComponent extends Object {
  */
 	var $__history = array();
 
+/**
+ * last property
+ *
+ * @var mixed null
+ * @access private
+ */
+	var $__last = null;
 /**
  * referer property
  *
@@ -225,6 +232,9 @@ class SwissArmyComponent extends Object {
 			if (!empty($noDefault) && $thread !== 'norm') {
 				return $this->back($steps, $prev, $redirect, 'norm', $clean);
 			}
+			if (!$C) {
+				$C = new Controller();
+			}
 			$C->redirect($prev);
 		}
 		return $prev;
@@ -238,6 +248,9 @@ class SwissArmyComponent extends Object {
  */
 	function beforeRender() {
 		$C =& $this->Controller;
+		if (empty ($C) || !empty($C->params['requested'])) {
+			return;
+		}
 		if ($this->_storeHistory()) {
 				$thread = $this->_browseKey();
 			if ($this->__here !== end($this->__history[$thread])) {
@@ -375,6 +388,9 @@ class SwissArmyComponent extends Object {
  * @access public
  */
 	function initialize(&$C, $config = array()) {
+		if (!empty($C->params['requested'])) {
+			return;
+		}
 		$this->Controller =& $C;
 		$this->settings = array_merge($this->settings, $config);
 		if ($this->_storeHistory()) {
@@ -424,6 +440,9 @@ class SwissArmyComponent extends Object {
  * @access public
  */
 	function startup($C) {
+		if (!empty($C->params['requested'])) {
+			return;
+		}
 		if (isset($this->Auth) && !$this->Auth->user() && !in_array('return', $C->params) && $this->settings['authLoginSessionToken']) {
 			if (!$C->data) {
 				$token = Security::hash(String::uuid(), null, true);
@@ -442,6 +461,9 @@ class SwissArmyComponent extends Object {
  * @access public
  */
 	function shutdown($C) {
+		if (!empty($C->params['requested'])) {
+			return;
+		}
 		$assetHost = Configure::read('MiCompressor.host');
 		if ($assetHost) {
 			$C->output = preg_replace(
@@ -533,7 +555,7 @@ class SwissArmyComponent extends Object {
  * @access protected
  */
 	function _browseKey() {
-		if ($this->Controller->RequestHandler->isAjax()) {
+		if (empty($this->Controller->RequestHandler) || $this->Controller->RequestHandler->isAjax()) {
 			return 'ajax';
 		}
 		return 'norm';
@@ -720,6 +742,9 @@ class SwissArmyComponent extends Object {
  */
 	function setDefaultPageTitle() {
 		$C =& $this->Controller;
+		if (empty ($C) || !empty($C->params['requested'])) {
+			return;
+		}
 		$action = Inflector::humanize(str_replace('admin_', '', $C->action));
 		$bits = array('prefix', 'plugin', 'name', 'action');
 		$prefix = 'admin_';
@@ -881,7 +906,11 @@ class SwissArmyComponent extends Object {
 		if ($key && is_string($url)) {
 			return str_replace('.ajax', '', $url);
 		}
-		$webroot = $this->Controller->webroot;
+		if (isset($this->Controller)) {
+			$webroot = $this->Controller->webroot;
+		} else {
+			$webroot = Router::url('/');
+		}
 		if (class_exists('SeoComponent')) {
 			$url = SeoComponent::url($url);
 			if (!$key) {

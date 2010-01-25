@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: restrict_site.php 2021 2009-12-11 18:02:52Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for restrict_site.php
@@ -19,9 +19,9 @@
  * @package       mi
  * @subpackage    mi.models.behaviors
  * @since         v 1.0 (12-Oct-2009)
- * @version       $Revision: 2021 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2009-12-11 19:02:52 +0100 (Fri, 11 Dec 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: mi.php 1446 2009-08-16 21:31:46Z ad7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for mi.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.vendors.shells
  * @since         v 1.0
- * @version       $Revision: 1446 $
- * @modifiedby    $LastChangedBy: ad7six $
- * @lastmodified  $Date: 2009-08-16 23:31:46 +0200 (Sun, 16 Aug 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 uses('Folder','File','model'.DS.'connection_manager');

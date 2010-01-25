@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: mi_form.php 1996 2009-12-07 16:58:38Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for mi_form.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.views.helpers
  * @since         v 1.0
- * @version       $Revision: 1996 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2009-12-07 17:58:38 +0100 (Mon, 07 Dec 2009) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Helper', 'Form');

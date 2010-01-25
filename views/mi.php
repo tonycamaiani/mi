@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: mi.php 2068 2010-01-07 17:21:53Z AD7six $ */
+/* SVN FILE: $Id$ */
 
 /**
  * Short description for mi.php
@@ -19,9 +19,9 @@
  * @package       base
  * @subpackage    base.views
  * @since         v 1.0
- * @version       $Revision: 2068 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2010-01-07 18:21:53 +0100 (Thu, 07 Jan 2010) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
