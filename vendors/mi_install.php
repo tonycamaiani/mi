@@ -709,6 +709,10 @@ class MiInstall extends Object {
 			$cmd = MiInstall::$settings[$type]['upgrade'];
 		}
 
+		$return = MiInstall::_system('cd ' . escapeshellarg($path) . ' && git branch');
+		if ($cmd === 'git pull' && preg_match('@\* (no branch)@', implode($return[1])) !== false) {
+			$cmd = 'git checkout master && git pull origin master';
+		}
 		$return = MiInstall::_system('cd ' . escapeshellarg($path) . ' && ' . $cmd);
 		if ($stash) {
 			MiInstall::_system('cd ' . escapeshellarg($path) . ' && git stash pop');
