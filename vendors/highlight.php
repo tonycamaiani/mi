@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id$ */
+
 
 /**
  * Short description for highlight.php
@@ -10,15 +10,11 @@
  *
  * Copyright (c) 2008, CHris Schiflett
  *
- * @filesource
  * @copyright     Copyright (c) 2007, Chris Schiflett
  * @link          http://shiflett.org/blog/oct/formatting-and-highlighting-php-code-listings
  * @package       base
  * @subpackage    base.vendors
  * @since         v 1.0
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
  * @license       tbd
  */
 

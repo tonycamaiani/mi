@@ -11,7 +11,6 @@
  * Licensed under tbd
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
  * @copyright     Copyright (c) 2009, Andy Dawson
  * @link          www.ad7six.com
  * @package       mi

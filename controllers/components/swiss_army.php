@@ -1,4 +1,4 @@
-<?php /* SVN FILE: $Id$ */
+<?php 
 
 /**
  * Short description for swiss_army.php
@@ -12,15 +12,11 @@
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
  * @copyright     Copyright (c) 2008, Andy Dawson
  * @link          www.ad7six.com
  * @package       base
  * @subpackage    base.controllers.components
  * @since         v 1.0
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 

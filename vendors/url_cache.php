@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id$ */
+
 
 /**
  * A class for caching and speeding up router usage
@@ -12,16 +12,12 @@
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
  * @author        Originally proposed by Matt Curry (www.pseudocoder.com)
  * @copyright     Copyright (c) 2009, Andy Dawson
  * @link          www.ad7six.com
  * @package       mi
  * @subpackage    mi.vendors
  * @since         v 1.0 (05-Jun-2009)
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Vendor', 'Mi.MiCache');
