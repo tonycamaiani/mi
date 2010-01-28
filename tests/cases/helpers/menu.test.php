@@ -292,4 +292,232 @@ class MenuHelperTest extends CakeTestCase {
 		);
 		$this->assertTags($result, $expected, true);
 	}
+
+/**
+ * testSetExplicitActive method
+ *
+ * @return void
+ * @access public
+ */
+	function testSetExplicitActive() {
+		$this->Menu->add(array(
+			array('title' => '1', 'url' => '#'),
+			array('title' => '1.1', 'under' => '1', 'url' => '#'),
+			array('title' => '1.1.1', 'under' => '1.1', 'url' => '#'),
+			array('title' => '2', 'url' => '#'),
+			array('title' => '2.1', 'under' => '2', 'url' => '#'),
+			array('title' => '2.1.1', 'under' => '2.1', 'url' => '#'),
+			array('title' => '3', 'url' => '#'),
+			array('title' => '3.1', 'under' => '3', 'url' => '#'),
+			array('title' => '3.1.1', 'under' => '3.1', 'url' => '#'),
+			array('title' => '4', 'url' => '#'),
+		));
+
+		$this->Menu->setActive('2');
+		$result = $this->Menu->display();
+		$result = str_replace("\t", '', $result);
+		$expected = array(
+			array('ul' => array('class' => 'menu')),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '1.1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '1.1.1', '/a',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+
+			array('li' => array('class' => 'active')),
+			array('a' => array('href' => '#')), '2', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '2.1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '2.1.1', '/a',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+
+			array('li' => array()),
+			array('a' => array('href' => '#')), '3', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '3.1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '3.1.1', '/a',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+
+			array('li' => array()),
+			array('a' => array('href' => '#')), '4', '/a',
+			'/li',
+
+			'/ul'
+		);
+		$this->assertTags($result, $expected, true);
+	}
+
+/**
+ * testSetExplicitActivePath method
+ *
+ * @return void
+ * @access public
+ */
+	function testSetExplicitActivePath() {
+		$this->Menu->add(array(
+			array('title' => '1', 'url' => '#'),
+			array('title' => '1.1', 'under' => '1', 'url' => '#'),
+			array('title' => '1.1.1', 'under' => '1.1', 'url' => '#'),
+			array('title' => '2', 'url' => '#'),
+			array('title' => '2.1', 'under' => '2', 'url' => '#'),
+			array('title' => '2.1.1', 'under' => '2.1', 'url' => '#'),
+			array('title' => '3', 'url' => '#'),
+			array('title' => '3.1', 'under' => '3', 'url' => '#'),
+			array('title' => '3.1.1', 'under' => '3.1', 'url' => '#'),
+			array('title' => '4', 'url' => '#'),
+		));
+
+		$this->Menu->setActive('2.1');
+		$result = $this->Menu->display();
+		$result = str_replace("\t", '', $result);
+		$expected = array(
+			array('ul' => array('class' => 'menu')),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '1.1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '1.1.1', '/a',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+
+			array('li' => array('class' => 'active')),
+			array('a' => array('href' => '#')), '2', '/a',
+			array('ul' => array()),
+			array('li' => array('class' => 'active')),
+			array('a' => array('href' => '#')), '2.1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '2.1.1', '/a',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+
+			array('li' => array()),
+			array('a' => array('href' => '#')), '3', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '3.1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '3.1.1', '/a',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+
+			array('li' => array()),
+			array('a' => array('href' => '#')), '4', '/a',
+			'/li',
+
+			'/ul'
+		);
+		$this->assertTags($result, $expected, true);
+	}
+
+/**
+ * testSetExplicitActiveEarlySet method
+ *
+ * @return void
+ * @access public
+ */
+	function testSetExplicitActiveEarlySet() {
+		$this->Menu->setActive('2.1');
+		$this->Menu->add(array(
+			array('title' => '1', 'url' => '#'),
+			array('title' => '1.1', 'under' => '1', 'url' => '#'),
+			array('title' => '1.1.1', 'under' => '1.1', 'url' => '#'),
+			array('title' => '2', 'url' => '#'),
+			array('title' => '2.1', 'under' => '2', 'url' => '#'),
+			array('title' => '2.1.1', 'under' => '2.1', 'url' => '#'),
+			array('title' => '3', 'url' => '#'),
+			array('title' => '3.1', 'under' => '3', 'url' => '#'),
+			array('title' => '3.1.1', 'under' => '3.1', 'url' => '#'),
+			array('title' => '4', 'url' => '#'),
+		));
+
+		$result = $this->Menu->display();
+		$result = str_replace("\t", '', $result);
+		$expected = array(
+			array('ul' => array('class' => 'menu')),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '1.1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '1.1.1', '/a',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+
+			array('li' => array('class' => 'active')),
+			array('a' => array('href' => '#')), '2', '/a',
+			array('ul' => array()),
+			array('li' => array('class' => 'active')),
+			array('a' => array('href' => '#')), '2.1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '2.1.1', '/a',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+
+			array('li' => array()),
+			array('a' => array('href' => '#')), '3', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '3.1', '/a',
+			array('ul' => array()),
+			array('li' => array()),
+			array('a' => array('href' => '#')), '3.1.1', '/a',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+
+			array('li' => array()),
+			array('a' => array('href' => '#')), '4', '/a',
+			'/li',
+
+			'/ul'
+		);
+		$this->assertTags($result, $expected, true);
+	}
 }

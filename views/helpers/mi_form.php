@@ -87,15 +87,22 @@ class MiFormHelper extends FormHelper {
 		}
 
 		$return = parent::create($model, $options);
-		$referer = $this->Session->read('referer');
-		if (!$referer) {
-			$referer = AppController::referer('/', true);
-			if (Router::normalize($referer) == Router::normalize(array('admin' => false, 'controller' => 'users', 'action' => 'login'))) {
-				$referer = '/';
+		if (!empty($this->data['App']['referer'])) {
+			$referer = $this->data['App']['referer'];
+		} else {
+			$referer = $this->Session->read('referer');
+			if (!$referer) {
+				$referer = AppController::referer('/', true);
+				if (Router::normalize($referer) == Router::normalize(array('admin' => false, 'controller' => 'users', 'action' => 'login'))) {
+					$referer = '/';
+				}
 			}
 		}
 		$referer = $this->hidden('App.referer', array('default' => $referer));
-		return preg_replace('#</fieldset>#', $referer . '</fieldset>', $return);
+		if (strpos('fieldset', $return)) {
+			return preg_replace('#</fieldset>#', $referer . '</fieldset>', $return);
+		}
+		return $return . '<div style="display:none;">' . $referer . '</div>';
 	}
 
 /**
