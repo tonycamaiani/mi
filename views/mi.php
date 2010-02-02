@@ -52,9 +52,18 @@ class MiView extends View {
 	function element($name, $params = array(), $loadHelpers = false) {
 		$return = parent::element($name, $params, $loadHelpers);
 		if (strpos($return, 'Not Found:') === 0) {
+			$plugin = null;
+			if (isset($params['plugin'])) {
+				$plugin = $params['plugin'];
+			}
+
+			if (isset($this->plugin) && !$plugin) {
+				$plugin = $this->plugin;
+			}
+
 			$paths = $this->_paths($plugin);
 			$path = array_pop($paths);
-			while ($paths && strpos($paths, DS . 'locale' . DS)) {
+			while ($paths && strpos($path, DS . 'locale' . DS)) {
 				$path = array_pop($paths);
 			}
 			$file = $path . 'elements' . DS . $name . $this->ext;
