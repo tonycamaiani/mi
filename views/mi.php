@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Short description for mi.php
  *
@@ -15,8 +13,8 @@
  *
  * @copyright     Copyright (c) 2008, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.views
+ * @package       mi
+ * @subpackage    mi.views
  * @since         v 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -25,8 +23,8 @@
  * MiView class
  *
  * @uses          View
- * @package       base
- * @subpackage    base.views
+ * @package       mi
+ * @subpackage    mi.views
  */
 class MiView extends View {
 
@@ -40,6 +38,29 @@ class MiView extends View {
 	function __construct(&$controller) {
 		parent::__construct($controller);
 		$this->theme =& $controller->theme;
+	}
+
+/**
+ * Undo Mi logic when reporting an error for a missing view file
+ *
+ * @param mixed $name
+ * @param array $params array()
+ * @param bool $loadHelpers false
+ * @return void
+ * @access public
+ */
+	function element($name, $params = array(), $loadHelpers = false) {
+		$return = parent::element($name, $params, $loadHelpers);
+		if (strpos($return, 'Not Found:') === 0) {
+			$paths = $this->_paths($plugin);
+			$path = array_pop($paths);
+			while ($paths && strpos($paths, DS . 'locale' . DS)) {
+				$path = array_pop($paths);
+			}
+			$file = $path . 'elements' . DS . $name . $this->ext;
+			return "Not Found: " . $file;
+		}
+		return $return;
 	}
 
 /**
