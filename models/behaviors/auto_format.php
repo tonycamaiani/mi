@@ -15,8 +15,8 @@
  *
  * @copyright     Copyright (c) 2008, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.models.behaviors
+ * @package       mi
+ * @subpackage    mi.models.behaviors
  * @since         v 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -27,8 +27,8 @@
  * A collection of functions for handling user input, aimed at making editing code content easier
  *
  * @uses          ModelBehavior
- * @package       base
- * @subpackage    base.models.behaviors
+ * @package       mi
+ * @subpackage    mi.models.behaviors
  */
 class AutoFormatBehavior extends ModelBehavior {
 

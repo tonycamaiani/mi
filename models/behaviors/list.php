@@ -15,8 +15,8 @@
  *
  * @copyright     Copyright (c) 2008, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.models.behaviors
+ * @package       mi
+ * @subpackage    mi.models.behaviors
  * @since         v 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -28,16 +28,16 @@
  * actually want to query table-wide.
  *
  * @uses          ModelBehavior
- * @package       base
- * @subpackage    base.models.behaviors
+ * @package       mi
+ * @subpackage    mi.models.behaviors
  */
 
 /**
  * ListBehavior class
  *
  * @uses          ModelBehavior
- * @package       base
- * @subpackage    base.models.behaviors
+ * @package       mi
+ * @subpackage    mi.models.behaviors
  */
 class ListBehavior extends ModelBehavior {
 

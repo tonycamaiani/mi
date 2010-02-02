@@ -15,8 +15,8 @@
  *
  * @copyright     Copyright (c) 2009, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.controllers.components
+ * @package       mi
+ * @subpackage    mi.controllers.components
  * @since         v 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -26,8 +26,8 @@ App::import('Core', 'Router');
  * SeoComponent class
  *
  * @uses          Object
- * @package       base
- * @subpackage    base.controllers.components
+ * @package       mi
+ * @subpackage    mi.controllers.components
  */
 class SeoComponent extends Object {
 

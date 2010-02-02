@@ -15,8 +15,8 @@
  *
  * @copyright     Copyright (c) 2008, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.vendors.shells
+ * @package       mi
+ * @subpackage    mi.vendors.shells
  * @since         v 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -26,8 +26,8 @@ uses('Folder','File');
  * ClearShell class
  *
  * @uses          Shell
- * @package       base
- * @subpackage    base.vendors.shells
+ * @package       mi
+ * @subpackage    mi.vendors.shells
  */
 class ClearShell extends Shell {
 

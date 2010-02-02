@@ -26,8 +26,8 @@ App::import('Helper', 'Paginator');
  * MiPaginatorHelper class
  *
  * @uses          PaginatorHelper
- * @package       base
- * @subpackage    base.views.helpers
+ * @package       mi
+ * @subpackage    mi.views.helpers
  */
 class MiPaginatorHelper extends PaginatorHelper {
 

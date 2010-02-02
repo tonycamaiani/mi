@@ -12,8 +12,8 @@
  *
  * @copyright     Copyright (c) 2007, Chris Schiflett
  * @link          http://shiflett.org/blog/oct/formatting-and-highlighting-php-code-listings
- * @package       base
- * @subpackage    base.vendors
+ * @package       mi
+ * @subpackage    mi.vendors
  * @since         v 1.0
  * @license       tbd
  */
@@ -66,8 +66,8 @@ ol.code li code {
 /**
  * highlight class
  *
- * @package       base
- * @subpackage    base.vendors
+ * @package       mi
+ * @subpackage    mi.vendors
  */
 class highlight {
 

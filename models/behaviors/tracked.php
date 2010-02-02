@@ -19,8 +19,8 @@
  *
  * @copyright     Copyright (c) 2009, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.models.behaviors
+ * @package       mi
+ * @subpackage    mi.models.behaviors
  * @since         v 1.0 (15-Jun-2009)
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -35,8 +35,8 @@
  * upon delete.
  *
  * @uses          ModelBehavior
- * @package       base
- * @subpackage    base.models.behaviors
+ * @package       mi
+ * @subpackage    mi.models.behaviors
  */
 class TrackedBehavior extends ModelBehavior {
 

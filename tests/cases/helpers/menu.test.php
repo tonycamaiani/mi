@@ -11,8 +11,8 @@
  *
  * @copyright     Copyright (c) 2009, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.tests.cases.helpers
+ * @package       mi
+ * @subpackage    mi.tests.cases.helpers
  * @since         v 1.0 (28-Mar-2009)
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -23,8 +23,8 @@ App::import('Helper', array('Mi.Menu'));
  * MenuHelperTest class
  *
  * @uses          CakeTestCase
- * @package       base
- * @subpackage    base.tests.cases.helpers
+ * @package       mi
+ * @subpackage    mi.tests.cases.helpers
  */
 class MenuHelperTest extends CakeTestCase {
 

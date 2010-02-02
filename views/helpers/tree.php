@@ -15,8 +15,8 @@
  *
  * @copyright     Copyright (c) 2008, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.views.helpers
+ * @package       mi
+ * @subpackage    mi.views.helpers
  * @since         v 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -27,8 +27,8 @@
  * Helper to generate tree representations of MPTT or recursively nested data
  *
  * @uses          AppHelper
- * @package       base
- * @subpackage    base.views.helpers
+ * @package       mi
+ * @subpackage    mi.views.helpers
  */
 class TreeHelper extends AppHelper {
 

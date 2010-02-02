@@ -396,8 +396,8 @@ class ListTestCase extends CakeTestCase {
  * MultiListTestCase class
  *
  * @uses          ListTestCase
- * @package       base
- * @subpackage    base.tests.cases.behaviors
+ * @package       mi
+ * @subpackage    mi.tests.cases.behaviors
  */
 class MultiListTestCase extends ListTestCase {
 

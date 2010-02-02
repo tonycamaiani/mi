@@ -11,8 +11,8 @@
  *
  * @copyright     Copyright (c) 2009, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.vendors
+ * @package       mi
+ * @subpackage    mi.vendors
  * @since         v 1.0 (02-Mar-2009)
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -49,8 +49,8 @@
  *	$data = MiCache::rA('/some/string/url/or/array/url', array('some' => 'params'));
  *
  * @uses          Object
- * @package       base
- * @subpackage    base.vendors
+ * @package       mi
+ * @subpackage    mi.vendors
  */
 class MiCache extends Object {
 
