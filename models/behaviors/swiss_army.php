@@ -179,7 +179,11 @@ if (is_array($validator['rule'])) {
 			return $return;
 		}
 		$Model->create();
-		return $Model->save($conditions);
+		$return = $Model->save($conditions);
+		if ($return) {
+			$return[$Model->alias][$Model->primaryKey] = $Model->id;
+		}
+		return $return;
 	}
 
 /**
