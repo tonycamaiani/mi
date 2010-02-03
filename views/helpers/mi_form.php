@@ -6,7 +6,7 @@
  *
  * Long description for mi_form.php
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright (c) 2008, Andy Dawson
  *
@@ -30,7 +30,7 @@ App::import('Helper', 'Form');
  * @subpackage    mi.views.helpers
  */
 class MiFormHelper extends FormHelper {
-	var $helpers = array(
+	public $helpers = array(
 		'Session',
 		'Html',
 	);
@@ -41,7 +41,7 @@ class MiFormHelper extends FormHelper {
  * @var string 'Form'
  * @access public
  */
-	var $name = 'MiForm';
+	public $name = 'MiForm';
 
 /**
  * construct method
@@ -50,7 +50,7 @@ class MiFormHelper extends FormHelper {
  * @return void
  * @access private
  */
-	function __construct($options = array()) {
+	public function __construct($options = array()) {
 		if (App::import('Helper', 'MiAsset.Asset')) {
 			$this->helpers[] = 'MiAsset.Asset';
 		}
@@ -67,7 +67,7 @@ class MiFormHelper extends FormHelper {
  * @return void
  * @access public
  */
-	function create($model = null, $options = array()) {
+	public function create($model = null, $options = array()) {
 		if (!isset($options['url']) && !isset($options['action'])) {
 			$options['url'] = '/' . ltrim($this->params['url']['url'], '/');
 		}
@@ -117,7 +117,7 @@ class MiFormHelper extends FormHelper {
  * @return void
  * @access public
  */
-	function dateTime($fieldName, $dateFormat = 'DMY', $timeFormat = '12', $selected = null, $options = array(), $showEmpty = true) {
+	public function dateTime($fieldName, $dateFormat = 'DMY', $timeFormat = '12', $selected = null, $options = array(), $showEmpty = true) {
 		if (!empty($options['selects'])) {
 			unset($options['selects']);
 			return parent::dateTime($fieldName, $dateFormat, $timeFormat, $selected, $options, $showEmpty);
@@ -173,7 +173,7 @@ class MiFormHelper extends FormHelper {
  * @param string $text Text that will appear in the label field.
  * @return string The formatted LABEL element
  */
-	function label($fieldName = null, $text = null, $attributes = array()) {
+	public function label($fieldName = null, $text = null, $attributes = array()) {
 		if (empty($fieldName)) {
 			$view = ClassRegistry::getObject('view');
 			$fieldName = implode('.', $view->entity());

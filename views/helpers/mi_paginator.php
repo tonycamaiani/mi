@@ -6,7 +6,7 @@
  *
  * Long description for mi_paginator.php
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright (c) 2009, Andy Dawson
  *
@@ -41,7 +41,7 @@ class MiPaginatorHelper extends PaginatorHelper {
  * @return void
  * @access public
  */
-	function sort($title, $key = null, $options = array()) {
+	public function sort($title, $key = null, $options = array()) {
 		if (!$key) {
 			$key = $title;
 			if (strpos($title, '.')) {
@@ -83,7 +83,7 @@ class MiPaginatorHelper extends PaginatorHelper {
  * @return void
  * @access public
  */
-	function url($options = array(), $asArray = false, $model = null) {
+	public function url($options = array(), $asArray = false, $model = null) {
 		$paging = $this->params($model);
 		$url = array_merge(array_filter(Set::diff(array_merge($paging['defaults'], $paging['options']), $paging['defaults'])), $options);
 

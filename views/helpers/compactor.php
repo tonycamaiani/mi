@@ -6,7 +6,7 @@
  *
  * Long description for compactor.php
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright (c) 2008, Andy Dawson
  *
@@ -36,7 +36,7 @@ class CompactorHelper extends AppHelper {
  * @var string 'Compactor'
  * @access public
  */
-	var $name = 'Compactor';
+	public $name = 'Compactor';
 
 /**
  * construct method
@@ -47,7 +47,7 @@ class CompactorHelper extends AppHelper {
  * @access private
  * @return void
  */
-	function __construct($one = null, $two = null, $three = null) {
+	public function __construct($one = null, $two = null, $three = null) {
 		parent::__construct($one, $two, $three);
 		ob_start();
 	}
@@ -58,7 +58,7 @@ class CompactorHelper extends AppHelper {
  * @access private
  * @return void
  */
-	function __destruct() {
+	public function __destruct() {
 		if (!Configure::read()) {
 			$buffer = ob_get_clean();
 			//$original = strlen($buffer);

@@ -6,7 +6,7 @@
  *
  * Long description for menu.php
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright (c) 2008, Andy Dawson
  *
@@ -36,7 +36,7 @@ class MenuHelper extends AppHelper {
  * @var string 'Menu'
  * @access public
  */
-	var $name = 'Menu';
+	public $name = 'Menu';
 
 /**
  * helpers property
@@ -44,7 +44,7 @@ class MenuHelper extends AppHelper {
  * @var array
  * @access public
  */
-	var $helpers = array('Html');
+	public $helpers = array('Html');
 
 /**
  * counter property
@@ -52,7 +52,7 @@ class MenuHelper extends AppHelper {
  * @var int 1000
  * @access private
  */
-	var $__counter = 1000;
+	private $__counter = 1000;
 
 /**
  * defaultSettings property
@@ -60,7 +60,7 @@ class MenuHelper extends AppHelper {
  * @var array
  * @access private
  */
-	var $__defaultSettings = array(
+	private $__defaultSettings = array(
 		'activeMode' => 'url', // url // controller[name] // action[and controller name] // false [do nothing]
 		'hereMode' => 'active', // active[mark the li as active] // text[no link just text] // false[do nothing]
 		'parentHereMode' => 'active', // active[mark the li as active] // text[no link just text] // false[do nothing]
@@ -84,7 +84,7 @@ class MenuHelper extends AppHelper {
  * @var array
  * @access public
  */
-	var $settings = array();
+	public $settings = array();
 
 /**
  * section property
@@ -94,7 +94,7 @@ class MenuHelper extends AppHelper {
  * @var string 'menu'
  * @access private
  */
-	var $__section = 'menu';
+	private $__section = 'menu';
 
 /**
  * data property
@@ -104,7 +104,7 @@ class MenuHelper extends AppHelper {
  * @var array
  * @access private
  */
-	var $__data = array();
+	private $__data = array();
 
 /**
  * flatData property
@@ -114,7 +114,7 @@ class MenuHelper extends AppHelper {
  * @var array
  * @access private
  */
-	var $__flatData = array();
+	private $__flatData = array();
 
 /**
  * here property
@@ -124,7 +124,7 @@ class MenuHelper extends AppHelper {
  * @var string ''
  * @access private
  */
-	var $__here = '';
+	private $__here = '';
 
 /**
  * construct method
@@ -133,7 +133,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access private
  */
-	function __construct($options = array()) {
+	public function __construct($options = array()) {
 		$this->__defaultSettings = am($this->__defaultSettings, $options);
 		parent::__construct($options);
 	}
@@ -144,7 +144,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access public
  */
-	function beforeLayout() {
+	public function beforeLayout() {
 		$this->__counter = 0;
 	}
 
@@ -170,7 +170,7 @@ class MenuHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function add($section = null, $title = null, $url = null, $under = null, $options = array()) {
+	public function add($section = null, $title = null, $url = null, $under = null, $options = array()) {
 		$class = $id = null;
 		$htmlAttributes = isset($options['htmlAttributes'])?$options['htmlAttributes']:array();
 		$confirmMessage = false;
@@ -306,7 +306,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access public
  */
-	function addAttribute($tag, $id = '', $key = '', $value = null) {
+	public function addAttribute($tag, $id = '', $key = '', $value = null) {
 		if (!is_null($value)) {
 			$this->__attributes[$tag][$id][$key] = $value;
 		} elseif (!(isset($this->__attributes[$tag][$id]) && in_array($key, $this->__attributes[$tag][$id]))) {
@@ -326,7 +326,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access public
  */
-	function del($section, $key = null) {
+	public function del($section, $key = null) {
 		if (is_null($key)) {
 			if (isset($this->__flatData[$section])) {
 				unset ($this->__flatData[$section]);
@@ -356,7 +356,7 @@ class MenuHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function display($section = null, $settings = array(), $createEmpty = true) {
+	public function display($section = null, $settings = array(), $createEmpty = true) {
 		$this->setActive();
 		if (is_array($section)) {
 			extract(array_merge(array('section' => $this->__section), $section));
@@ -392,7 +392,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access public
  */
-	function displayAll($settings = array(), $createEmpty = true) {
+	public function displayAll($settings = array(), $createEmpty = true) {
 		$return = '';
 		foreach($this->sections() as $section) {
 			$return .= $this->display($section, $settings, $createEmpty);
@@ -408,7 +408,7 @@ class MenuHelper extends AppHelper {
  * @access public
  * @return mixed array of menu sections if no order passed. name of the section name matching the order if passed.
  */
-	function sections($order = null) {
+	public function sections($order = null) {
 		$sequence = array();
 		foreach ($this->settings as $key => $settings) {
 			if ($order !== null && $settings['order'] == $order) {
@@ -434,7 +434,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access public
  */
-	function settings($section = null, $settings = array()) {
+	public function settings($section = null, $settings = array()) {
 		if (is_array($section)) {
 			$settings = $section;
 			$section = null;
@@ -464,7 +464,7 @@ class MenuHelper extends AppHelper {
 	       return $this->settings[$section];
 	}
 
-	function setActive($key = null, $section = null) {
+	public function setActive($key = null, $section = null) {
 		if ($section === null) {
 			$section = $this->__section;
 		}
@@ -499,7 +499,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access private
  */
-	function __attributes($tag, $clear = true) {
+	private function __attributes($tag, $clear = true) {
 		if (empty($this->__attributes[$tag])) {
 			return '';
 		}
@@ -534,7 +534,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access private
  */
-	function __menuItem($data) {
+	private function __menuItem($data) {
 		if ($data['markActive']) {
 			if ($data['markActive'] === true) {
 				$data['markActive'] = 'active';
@@ -567,7 +567,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access private
  */
-	function __display($section, $settings, $data, $header = true, $prefix = "\r\n") {
+	private function __display($section, $settings, $data, $header = true, $prefix = "\r\n") {
 		$return = '';
 		$start = true;
 		if ($settings['splitCount']) {
@@ -625,7 +625,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access private
  */
-	function __displayHead($section, $settings, $header = false) {
+	private function __displayHead($section, $settings, $header = false) {
 		$return = '';
 		if ($header) {
 			$section = Inflector::humanize(Inflector::underscore($section));
@@ -659,7 +659,7 @@ class MenuHelper extends AppHelper {
  * @access private
  * @return array($here, $markActive, $url)
  */
-	function __setHere($section, $url, $key, $activeMode, $hereMode, $options) {
+	public function __setHere($section, $url, $key, $activeMode, $hereMode, $options) {
 		$view =& ClassRegistry:: getObject('view');
 		if (!$view) {
 			return array(false, false, $url);
@@ -743,7 +743,7 @@ class MenuHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function addm($section = null, $data = array()) {
+	public function addm($section = null, $data = array()) {
 		if (is_array($section)) {
 			return $this->add($section);
 		}
@@ -762,7 +762,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access public
  */
-	function addItemAttribute($id = '', $key = '', $value = null) {
+	public function addItemAttribute($id = '', $key = '', $value = null) {
 		$this->addAttribute($this->settings[$this->__section]['itemTag'], $id, $key, $value);
 	}
 
@@ -776,7 +776,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access public
  */
-	function addTypeAttribute($id = '', $key = '', $value = null) {
+	public function addTypeAttribute($id = '', $key = '', $value = null) {
 		$this->addAttribute($this->settings[$this->__section]['typeTag'], $id, $key, $value);
 	}
 
@@ -788,7 +788,7 @@ class MenuHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function menuItem(&$data) {
+	public function menuItem(&$data) {
 		return $this->__menuItem($data);
 	}
 
@@ -802,7 +802,7 @@ class MenuHelper extends AppHelper {
  * @return void
  * @access public
  */
-	function generate($section = null, $settings = array(), $createEmpty = true) {
+	public function generate($section = null, $settings = array(), $createEmpty = true) {
 		return $this->display($section, $settings, $createEmpty);
 	}
 }

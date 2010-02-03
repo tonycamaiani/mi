@@ -38,7 +38,7 @@ class TreeHelper extends AppHelper {
  * @var string 'Tree'
  * @access public
  */
-	var $name = 'Tree';
+	public $name = 'Tree';
 
 /**
  * settings property
@@ -46,7 +46,7 @@ class TreeHelper extends AppHelper {
  * @var array
  * @access private
  */
-	var $__settings = array();
+	private $__settings = array();
 
 /**
  * typeAttributes property
@@ -54,7 +54,7 @@ class TreeHelper extends AppHelper {
  * @var array
  * @access private
  */
-	var $__typeAttributes = array();
+	private $__typeAttributes = array();
 
 /**
  * typeAttributesNext property
@@ -62,7 +62,7 @@ class TreeHelper extends AppHelper {
  * @var array
  * @access private
  */
-	var $__typeAttributesNext = array();
+	private $__typeAttributesNext = array();
 
 /**
  * itemAttributes property
@@ -70,7 +70,7 @@ class TreeHelper extends AppHelper {
  * @var array
  * @access private
  */
-	var $__itemAttributes = array();
+	private $__itemAttributes = array();
 
 /**
  * helpers variable
@@ -78,7 +78,7 @@ class TreeHelper extends AppHelper {
  * @var array
  * @access public
  */
-	var $helpers = array ('Html');
+	public $helpers = array ('Html');
 
 /**
  * Tree generation method.
@@ -114,7 +114,7 @@ class TreeHelper extends AppHelper {
  * @return string html representation of the passed data
  * @access public
  */
-	function generate($data, $settings = array ()) {
+	public function generate($data, $settings = array ()) {
 		$this->__settings = array_merge(array(
 			'model' => null,
 			'alias' => 'name',
@@ -321,7 +321,7 @@ class TreeHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function addItemAttribute($id = '', $key = '', $value = null) {
+	public function addItemAttribute($id = '', $key = '', $value = null) {
 		if (!is_null($value)) {
 			$this->__itemAttributes[$id][$key] = $value;
 		} elseif (!(isset($this->__itemAttributes[$id]) && in_array($key, $this->__itemAttributes[$id]))) {
@@ -357,7 +357,7 @@ class TreeHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function addTypeAttribute($id = '', $key = '', $value = null, $previousOrNext = 'next') {
+	public function addTypeAttribute($id = '', $key = '', $value = null, $previousOrNext = 'next') {
 		$var = '__typeAttributes';
 		$firstChild = isset($this->__settings['firstChild'])?$this->__settings['firstChild']:true;
 		if ($previousOrNext == 'next' && $firstChild) {
@@ -376,7 +376,7 @@ class TreeHelper extends AppHelper {
  * @return void
  * @access public
  */
-	function supressChildren() {
+	public function supressChildren() {
 	}
 
 /**
@@ -387,7 +387,7 @@ class TreeHelper extends AppHelper {
  * @access private
  * @return void
  */
-	function __suffix($reset = false) {
+	private function __suffix($reset = false) {
 
 /**
  * splitCount property
@@ -450,7 +450,7 @@ class TreeHelper extends AppHelper {
  * @access private
  * @return void
  */
-	function __attributes($rType, $elementData = array(), $clear = true) {
+	private function __attributes($rType, $elementData = array(), $clear = true) {
 		extract($this->__settings);
 		if ($rType == $type) {
 			$attributes = $this->__typeAttributes;

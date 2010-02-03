@@ -6,7 +6,7 @@
  *
  * Long description for highlight.php
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright (c) 2008, Andy Dawson
  *
@@ -36,7 +36,7 @@ class HighlightHelper extends AppHelper {
  * @var string
  * @access public
  */
-	var $name = 'Highlight';
+	public $name = 'Highlight';
 
 /**
  * auto variable
@@ -44,7 +44,7 @@ class HighlightHelper extends AppHelper {
  * @var bool
  * @access public
  */
-	var $auto = true;
+	public $auto = true;
 
 /**
  * construct function
@@ -55,7 +55,7 @@ class HighlightHelper extends AppHelper {
  * @access private
  * @return void
  */
-	function __construct($one = null, $two = null, $three = null) {
+	public function __construct($one = null, $two = null, $three = null) {
 		parent::__construct($one, $two, $three);
 		App::import('Vendor', 'Mi.Highlight');
 		$this->highlight = new highlight();
@@ -67,7 +67,7 @@ class HighlightHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function afterRender() {
+	public function afterRender() {
 		if ($this->auto) {
 			$text = @ ob_get_clean();
 			ob_start();
@@ -82,7 +82,7 @@ class HighlightHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function auto($text) {
+	public function auto($text) {
 		$this->auto = false; // avoid double processing
 		preg_match_all('/(<pre>)([\\s\\S]*?)(<\\/pre>)/i',  $text, $result, PREG_PATTERN_ORDER);
 		if (!empty($result['0'])) {
@@ -118,7 +118,7 @@ class HighlightHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function process($text) {
+	public function process($text) {
 		return $this->highlight->process($text);
 	}
 }

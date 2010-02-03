@@ -6,7 +6,7 @@
  *
  * Long description for mi_html.php
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright (c) 2008, Andy Dawson
  *
@@ -37,7 +37,23 @@ class MiHtmlHelper extends HtmlHelper {
  * @var string 'MiHtml'
  * @access public
  */
-	var $name = 'MiHtml';
+	public $name = 'MiHtml';
+
+	public $settings = array(
+		'warnings' => true
+	);
+
+/**
+ * construct method
+ *
+ * @param array $settings array()
+ * @return void
+ * @access private
+ */
+	public function __construct($settings = array()) {
+		$this->settings = array_merge($this->settings, $settings);
+		parent::__construct($settings);
+	}
 
 /**
  * Creates a formatted IMG element.
@@ -47,7 +63,7 @@ class MiHtmlHelper extends HtmlHelper {
  * @param array	$options Array of HTML attributes.
  * @return string
  */
-	function image($path, $options = array()) {
+	public function image($path, $options = array()) {
 		if (is_array($path)) {
 			$data = $path;
 			$path = $this->imageUrl($data, $options);
@@ -74,7 +90,7 @@ class MiHtmlHelper extends HtmlHelper {
  * @return array
  * @access public
  */
-	function imageAttributes($data, $options = array()) {
+	public function imageAttributes($data, $options = array()) {
 		if (!$data) {
 			return $options;
 		}
@@ -100,7 +116,7 @@ class MiHtmlHelper extends HtmlHelper {
  * @return string an image link, or just an image if there is no link
  * @access public
  */
-	function imageLink($data = array(), $size = null, $url = null, $params = array()) {
+	public function imageLink($data = array(), $size = null, $url = null, $params = array()) {
 		if ($url === false) {
 			return $this->image($data, $size, $params);
 		}
@@ -127,7 +143,7 @@ class MiHtmlHelper extends HtmlHelper {
  * @return string
  * @access public
  */
-	function imageUrl($data = array(), $size = null) {
+	public function imageUrl($data = array(), $size = null) {
 		if (isset($data['Media'])) {
 			$data = $data['Media'];
 		}
@@ -156,9 +172,11 @@ class MiHtmlHelper extends HtmlHelper {
  * @return void
  * @access public
  */
-	function link($title, $url = null, $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
+	public function link($title, $url = null, $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
 		if (!$escapeTitle) {
-			trigger_error('escapeTitle has been removed - use htmlAttributes[\'escape\'] instead');
+			if ($this->settings['warnings']) {
+				trigger_error('escapeTitle has been removed - use htmlAttributes[\'escape\'] instead');
+			}
 			$htmlAttributes['escape'] = false;
 		}
 		if (Configure::read() && $escapeTitle && strpos($title, '<span ') === 0) {
@@ -211,7 +229,7 @@ class MiHtmlHelper extends HtmlHelper {
  * @return void
  * @access public
  */
-	function mediaUrl($data, $size = null) {
+	public function mediaUrl($data, $size = null) {
 		if (is_array($size)) {
 			if (isset($size['size'])) {
 				$size = $size['size'];
@@ -242,7 +260,7 @@ class MiHtmlHelper extends HtmlHelper {
  * @return void
  * @access public
  */
-	function meta($type, $url = null, $attributes = array(), $inline = true) {
+	public function meta($type, $url = null, $attributes = array(), $inline = true) {
 		if ($type === 'canonical') {
 			return '<link rel="canonical" href="' . $this->url($url, true) . '"/>';
 		}
@@ -258,7 +276,7 @@ class MiHtmlHelper extends HtmlHelper {
  * @return void
  * @access public
  */
-	function shortHash($hash = '') {
+	public function shortHash($hash = '') {
 		return preg_replace('/^(.{4}).*(.{4})$/', '\1...\2', $hash);
 	}
 }
