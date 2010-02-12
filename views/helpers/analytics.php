@@ -3,7 +3,7 @@
  * A simple helper to automatically inject google analytics code into any
  * (full) html page that includes the helper.
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * Copyright (c) 2010, Andy Dawson
  *
@@ -45,8 +45,10 @@ class AnalyticsHelper extends AppHelper {
 /**
  * defaultSettings property
  * 	productionCheck - automatically check we're in production?
- * 	element - the name of an element that contains customized/more complex analytics code
+ * 	element - the name of an element to render instead of the inbuilt template
  * 	template - the template to use - see _template()
+ * 	code - the code to use - if isn't set, will look in MiCache::setting('Site.analyticsCode')
+ * 	domain - the domain to use - if isn't set, will look in MiCache::setting('Site.analyticsDomain')
  *
  * @var array
  * @access protected
@@ -54,7 +56,9 @@ class AnalyticsHelper extends AppHelper {
 	protected $_defaultSettings = array(
 		'productionCheck' => true,
 		'element' => false,
-		'template' => 'traditional'
+		'template' => 'traditional',
+		'code' => null,
+		'domain' => null
 	);
 
 /**
@@ -87,11 +91,17 @@ class AnalyticsHelper extends AppHelper {
  * @access public
  */
 	public function afterLayout() {
-		if ($this->settings['productionCheck'] && function_exists('isProduction') && !isProduction()) {
-			return;
+		if ($this->settings['productionCheck']) {
+			if (!function_exists('isProduction')) {
+				trigger_error('AnalyticsHelper afterLayout: This helper is configured to check production mode, but the function isProduction() doens\'t exist');
+				return;
+			}
+			if (!isProduction()) {
+				return;
+			}
 		}
 		$this->View =& ClassRegistry::getObject('View');
-		$code = $this->_codeBlock();
+		$code = $this->_codeBlock($this->settings['code'], $this->settings['domain']);
 		if ($code) {
 			$this->View->output = preg_replace('@</body>@', $code . '</body>', $this->View->output);
 		}
@@ -103,7 +113,7 @@ class AnalyticsHelper extends AppHelper {
  *
  * @param mixed $code null
  * @param mixed $domain null
- * @return void
+ * @return string the code to inject
  * @access protected
  */
 	protected function _codeBlock($code = null, $domain = null) {
