@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Short description for swiss_army.php
  *

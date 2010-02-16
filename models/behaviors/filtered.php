@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Short description for filtered.php
  *

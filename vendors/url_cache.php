@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * A class for caching and speeding up router usage
  *

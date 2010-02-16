@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Short description for product_fixture.php
  *

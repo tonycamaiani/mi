@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * A behavior for tracking who did what
  *

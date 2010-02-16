@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Short description for restrict_site.php
  *

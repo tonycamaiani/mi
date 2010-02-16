@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Short description for compactor.php
  *

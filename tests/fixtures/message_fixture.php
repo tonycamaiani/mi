@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Short description for message_fixture.php
  *

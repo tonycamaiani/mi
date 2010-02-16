@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Short description for tree_plus.php
  *
