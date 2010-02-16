@@ -480,7 +480,7 @@ if (!class_exists('FileEngine')) {
  *
  * @uses          FileEngine
  * @package       mi
- * @subpackage    mi.branches.mi_plugin.vendors
+ * @subpackage    mi.vendors
  */
 class MiFileEngine extends FileEngine {
 

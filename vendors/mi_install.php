@@ -13,8 +13,8 @@
  *
  * @copyright     Copyright (c) 2009, Andy Dawson
  * @link          www.ad7six.com
- * @package       mi_plugin
- * @subpackage    mi_plugin.vendors
+ * @package       mi
+ * @subpackage    mi.vendors
  * @since         v 1.0 (20-Aug-2009)
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -23,8 +23,8 @@
  * MiInstall class
  *
  * @uses          Object
- * @package       mi_plugin
- * @subpackage    mi_plugin.vendors
+ * @package       mi
+ * @subpackage    mi.vendors
  */
 class MiInstall extends Object {
 

@@ -13,8 +13,8 @@
  *
  * @copyright     Copyright (c) 2009, Andy Dawson
  * @link          www.ad7six.com
- * @package       mi_plugin
- * @subpackage    mi_plugin.vendors.shells
+ * @package       mi
+ * @subpackage    mi.vendors.shells
  * @since         v 1.0 (30-Sep-2009)
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -24,8 +24,8 @@ App::import('Model', 'ConnectionManager');
  * MiDbShell class
  *
  * @uses          Shell
- * @package       mi_plugin
- * @subpackage    mi_plugin.vendors.shells
+ * @package       mi
+ * @subpackage    mi.vendors.shells
  */
 class MiDbShell extends Shell {
 

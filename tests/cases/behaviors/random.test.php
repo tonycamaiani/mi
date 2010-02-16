@@ -13,8 +13,8 @@
  *
  * @copyright            Copyright (c) 2008, Andy Dawson
  * @link                 www.ad7six.com
- * @package              cake-base
- * @subpackage           cake-base.app.tests.cases.behaviors
+ * @package              mi
+ * @subpackage           mi.tests.cases.behaviors
  * @since                v 1.0
  * @modifiedBy           $LastChangedBy$
  * @lastModified         $Date$
@@ -25,8 +25,8 @@
  * Message class
  *
  * @uses                 CakeTestModel
- * @package              cake-base
- * @subpackage           cake-base.app.tests.cases.behaviors
+ * @package              mi
+ * @subpackage           mi.tests.cases.behaviors
  */
 class Message extends CakeTestModel {
 
@@ -51,8 +51,8 @@ class Message extends CakeTestModel {
  * RandomTestCase class
  *
  * @uses                 CakeTestCase
- * @package              cake-base
- * @subpackage           cake-base.app.tests.cases.behaviors
+ * @package              mi
+ * @subpackage           mi.tests.cases.behaviors
  */
 class RandomTestCase extends CakeTestCase {
 

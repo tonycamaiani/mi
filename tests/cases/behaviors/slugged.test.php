@@ -14,7 +14,7 @@
  * @copyright            Copyright (c) 2008, Andy Dawson
  * @link                 www.ad7six.com
  * @package              mi
- * @subpackage           mi.app.tests.cases.behaviors
+ * @subpackage           mi.tests.cases.behaviors
  * @since                v 1.0
  * @modifiedBy           $LastChangedBy$
  * @lastModified         $Date$
@@ -26,7 +26,7 @@
  *
  * @uses                 CakeTestModel
  * @package              mi
- * @subpackage           mi.app.tests.cases.behaviors
+ * @subpackage           mi.tests.cases.behaviors
  */
 class MessageSlugged extends CakeTestModel {
 
@@ -55,7 +55,7 @@ class MessageSlugged extends CakeTestModel {
  *
  * @uses                 CakeTestCase
  * @package              mi
- * @subpackage           mi.app.tests.cases.behaviors
+ * @subpackage           mi.tests.cases.behaviors
  */
 class SluggedTestCase extends CakeTestCase {
 

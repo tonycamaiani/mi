@@ -13,8 +13,8 @@
  *
  * @copyright     Copyright (c) 2008, Andy Dawson
  * @link          www.ad7six.com
- * @package       mi_plugin
- * @subpackage    mi_plugin.views.helpers
+ * @package       mi
+ * @subpackage    mi.views.helpers
  * @since         v 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -23,8 +23,8 @@
  * MenuHelper class
  *
  * @uses          AppHelper
- * @package       mi_plugin
- * @subpackage    mi_plugin.views.helpers
+ * @package       mi
+ * @subpackage    mi.views.helpers
  */
 class MenuHelper extends AppHelper {
 

@@ -13,8 +13,8 @@
  *
  * @copyright            Copyright (c) 2008, Andy Dawson
  * @link                 www.ad7six.com
- * @package              cake-base
- * @subpackage           cake-base.app.tests.fixtures
+ * @package              mi
+ * @subpackage           mi.tests.fixtures
  * @since                v 1.0
  * @modifiedBy           $LastChangedBy$
  * @lastModified         $Date$
@@ -25,8 +25,8 @@
  * MessageFixture class
  *
  * @uses                 CakeTestFixture
- * @package              cake-base
- * @subpackage           cake-base.app.tests.fixtures
+ * @package              mi
+ * @subpackage           mi.tests.fixtures
  */
 class MessageFixture extends CakeTestFixture {
 
