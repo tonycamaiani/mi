@@ -392,6 +392,36 @@ class MiInstall extends Object {
 	}
 
 /**
+ * Make sure a git repo is tracking something (if possible)
+ *
+ * @param mixed $path
+ * @return void
+ * @access protected
+ */
+	function _initGitRemote($path) {
+		$return = MiInstall::_system("cd $path && git branch");
+		preg_match('#\* ([^ ]*)#', trim(implode(' ', $return[1])), $matches);
+		if (!$matches) {
+			return;
+		}
+		$branch = $matches[1];
+
+		$return = MiInstall::_system("cd $path && git config remote.origin.url");
+		if (!$return[1]) {
+			return;
+		}
+
+		$origin = MiInstall::_system("cd $path && git config branch.$branch.remote");
+		$remoteBranch = MiInstall::_system("cd $path && git config branch.$branch.merge");
+		if ($origin[1] && $remoteBranch[1]) {
+			return;
+		}
+
+		MiInstall::_system("cd $path && git config branch.$branch.remote origin");
+		MiInstall::_system("cd $path && git config branch.$branch.merge refs/heads/$branch");
+	}
+
+/**
  * loop method
  *
  * @param mixed $function
@@ -563,7 +593,9 @@ class MiInstall extends Object {
 				continue;
 			}
 			foreach ($params as &$param) {
-				$param = String::insert($param, $params);
+				if (is_string ($param)) {
+					$param = String::insert($param, $params);
+				}
 			}
 		}
 		MiInstall::$settings['version'] = MiInstall::$version;
@@ -713,6 +745,10 @@ class MiInstall extends Object {
 			$cmd = 'git checkout master && git pull origin master';
 		}
 		$return = MiInstall::_system('cd ' . escapeshellarg($path) . ' && ' . $cmd);
+		if ($return[0]) {
+			MiInstall::_initGitRemote($path);
+			$return = MiInstall::_system('cd ' . escapeshellarg($path) . ' && ' . $cmd);
+		}
 		if ($stash) {
 			MiInstall::_system('cd ' . escapeshellarg($path) . ' && git stash pop');
 		}
