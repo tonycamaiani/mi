@@ -383,7 +383,7 @@ class SluggedTestCase extends CakeTestCase {
 	function _parseW3Response($response, $test, $inputFile) {
 		preg_match_all('@<span class="err_type">.*</span>.*<em>Line (.*),.*</em>@sU', $response, $result);
 		if (!$result[1]) {
-			debug ('couldn\'t parse the error messages generated for ' . $inputFile);
+			trigger_error('couldn\'t parse the error messages generated for ' . $inputFile);
 			return;
 		}
 		$result[1] = array_unique($result[1]);
@@ -394,7 +394,7 @@ class SluggedTestCase extends CakeTestCase {
 			if ($char) {
 				$this->illegalChars[] = (string)$char[1];
 			} else {
-				debug ($input[$line]);
+				trigger_error($input[$line]);
 			}
 		}
 		foreach ($this->illegalChars as $i => $code) {
@@ -413,7 +413,7 @@ class SluggedTestCase extends CakeTestCase {
 				$string .= "\x{{$code}}";
 			}
 		}
-		debug (array(basename($inputFile) => "\n\t" . $string));
+		debug (array(basename($inputFile) => "\n\t" . $string)); //@ignore
 	}
 
 /**
