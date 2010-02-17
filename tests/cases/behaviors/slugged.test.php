@@ -192,7 +192,7 @@ class SluggedTestCase extends CakeTestCase {
 				$charRegex .= html_entity_decode('&#' . hexdec($code) . ';', ENT_NOQUOTES, 'UTF-8');
 			}
 		}
-		debug (array('codeRegex' => "\n" . $codeRegex, 'charRegex' => "\n" . $charRegex, 'fullString' => "\n" . $string));
+		debug(array('codeRegex' => "\n$codeRegex", 'charRegex' => "\n$charRegex", 'fullString' => "\n$string")); //@ignore
 	}
 
 /**
