@@ -369,6 +369,11 @@ class IqShell extends Shell {
 					$this->_neatOut($rows, $indent);
 					continue;
 				}
+				$rows = (array)$rows;
+				if (count($rows) === 1) {
+					$this->out($indent . $key . "\t" . $rows[0]);
+					return;
+				}
 				$this->out($indent . $key);
 				$this->_neatOut($rows, $indent . "  ");
 			}
