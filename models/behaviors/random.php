@@ -216,6 +216,7 @@ class RandomBehavior extends ModelBehavior {
 			$max = $this->randomize($Model);
 		}
 		$Model->data[$Model->alias]['random'] = rand(0,  $max);
+		$this->_addToWhitelist($Model, 'random');
 		return true;
 	}
 
@@ -230,7 +231,8 @@ class RandomBehavior extends ModelBehavior {
  */
 	function randomize(&$Model, $conditions = array()) {
 		$max = $this->maxRand($Model, true);
-		$Model->updateAll(array('random' => 'FLOOR(RAND() * ' . $max . ')'), $conditions);
+		$db = ConnectionManager::getDataSource($Model->useDbConfig);
+		$Model->updateAll(array('random' => $db->expression('FLOOR(RAND() * ' . $max . ')')), $conditions);
 		return $max;
 	}
 

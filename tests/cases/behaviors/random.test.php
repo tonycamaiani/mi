@@ -44,7 +44,7 @@ class Message extends CakeTestModel {
  * @var array
  * @access public
  */
-	var $actsAs = array('Random' => array('autoRandom' => false));
+	var $actsAs = array('Mi.Random' => array('autoRandom' => false));
 }
 
 /**
@@ -458,9 +458,9 @@ class RandomTestCase extends CakeTestCase {
 			$this->Message->saveField('name', 'Test ' . str_pad($i, 3, '0', STR_PAD_LEFT));
 		}
 		$this->Message->create();
-		$before = $this->Message->find('list', array('fields' => array('name', 'random'), 'order' => 'name'));
+		$before = $this->Message->find('list', array('fields' => array('name', 'random'), 'order' => 'random'));
 		$this->Message->randomize();
-		$random = $this->Message->find('list', array('fields' => array('name', 'random'), 'order' => 'name'));
+		$random = $this->Message->find('list', array('fields' => array('name', 'random'), 'order' => 'random'));
 		$this->assertNotIdentical($random, $before);
 
 		$count = $this->Message->find('count');
