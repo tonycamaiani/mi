@@ -299,6 +299,13 @@ class MiCache extends Object {
 			MiCache::config();
 		}
 
+		$mainKey = null;
+		if (is_array($string)) {
+			$mainKey = current($string);
+			if (strpos($mainKey, '.')) {
+				list($_, $mainKey) = explode('.', $mainKey);
+			}
+		}
 		if (count(func_get_args() > 1 || !is_string($string))) {
 			$string = serialize(func_get_args());
 		}
@@ -309,7 +316,10 @@ class MiCache extends Object {
 			$prefix .= substr($hash, $offset, $config['dirLength']) . DS;
 			$offset = $i * $config['dirLength'];
 		}
-		return $prefix . $hash;
+		if ($mainKey) {
+			$mainKey .= DS;
+		}
+		return strtolower($mainKey . $prefix . $hash);
 	}
 
 /**
@@ -329,6 +339,25 @@ class MiCache extends Object {
 			$setting = MiCache::$setting;
 		}
 		return MiCache::_read($cacheKey, $setting);
+	}
+	public static function relatedKeys($cacheKey, $data) {
+		if (!is_array($data)) {
+			return array();
+		}
+		$row = array_pop($data);
+		$key = key($row);
+		if (is_numeric($row)) {
+			$row = current($row);
+			$key = key($row);
+		}
+		if ($key[0] = strtoupper($key[0])) {
+			if (strpos(strtolower($key), $cacheKey) === 0) {
+				array_shift($cacheKey);
+			}
+			debug ($row); die;
+			return array_keys($row);
+		}
+		return array();
 	}
 
 /**
@@ -384,6 +413,7 @@ class MiCache extends Object {
 		$settings = MiCache::$settings[$setting];
 		$path = dirname($settings['path'] . $settings['prefix'] . $cacheKey);
 		if (MiCache::_createDir($path)) {
+			$relatedKeys = MiCache::relatedKeys($cacheKey, $data);
 			return Cache::write($cacheKey, $data, $setting);
 		}
 		return false;
