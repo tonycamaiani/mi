@@ -548,7 +548,7 @@ class MiFileEngine extends FileEngine {
 
 		$dir = dirname($this->settings['path']);
 
-		if (DS !== '/') {
+		if (DS === '\\') {
 			$Folder = new Folder($dir);
 			$files = $Folder->findRecursive('(?!\\.|empty).*');
 			foreach($files as $file) {
