@@ -69,7 +69,7 @@ class SerializedBehavior extends ModelBehavior {
 		'__initialized' => false,
 		'fields' => 'auto',
 		'defaultSerializeFunction' => 'json_encode',
-		'defaultUnSerializeFunction' => 'json_decode',
+		'defaultUnSerializeFunction' => array('json_decode', true),
 	);
 
 /**
@@ -186,6 +186,14 @@ class SerializedBehavior extends ModelBehavior {
  * @access protected
  */
 	function _convert(&$Model, $in, $function = null) {
+		if (is_array($function)) {
+			$params = $function;
+			$function = $function[0];
+			$params[0] = $in;
+			if (function_exists($function)) {
+				return call_user_func_array($function, $params);
+			}
+		}
 		if (function_exists($function)) {
 			return $function($in);
 		}
