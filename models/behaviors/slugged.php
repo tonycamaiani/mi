@@ -217,6 +217,72 @@ class SluggedBehavior extends ModelBehavior {
 	}
 
 /**
+ * removeStopWords from a string. if $splitOnStopWord is true, the following occurs:
+ * 	input "apples bananas pears and red cars"
+ * 	output array('apples bananas pears', 'red cars')
+ *
+ * If the passed string doesn't contain the seperator, or after stripping out stop words there's
+ * nothing left - the original input is returned (in the desired format)
+ *
+ * Therefore passing "contain" will return immediately array('contain')
+ * Passing "contain this text" will return array('text')
+ * 	both contain and this are stop words
+ * Passing "contain this" will return array('contain this')
+ *
+ * @param mixed $Model
+ * @param string $string ''
+ * @param string $seperator '
+ * @param bool $splitOnStopWord true
+ * @param bool $returnArray true
+ * @return mixed
+ * @access public
+ */
+	public function removeStopWords(&$Model, $string = '', $seperator = ' ', $splitOnStopWord = true, $returnArray = true) {
+		if (!strpos($string, $seperator)) {
+			if ($returnArray) {
+				return array($string);
+			}
+			return $string;
+		}
+		$originalTerms = $terms = array_filter(array_map('trim', explode($seperator, $string)));
+		$lang = MiCache::setting('Site.lang');
+		if (!array_key_exists($lang, $this->stopWords)) {
+			ob_start();
+			App::import('Vendor', 'stop_words/' . $lang, array('file' => "stop_words/$lang.txt"));
+			$stopWords = preg_replace('@/\*.*\*/@', '', ob_get_clean());
+			$this->stopWords[$lang] = array_map('trim', explode(',', str_replace(array("\n", "\r"), '', $stopWords)));
+		}
+		if ($splitOnStopWord) {
+			$terms = $chunk = array();
+			foreach($originalTerms as $term) {
+				if (in_array($term, $this->stopWords[$lang])) {
+					if ($chunk) {
+						$terms[] = $chunk;
+						$chunk = array();
+					}
+					continue;
+				}
+				$chunk[] = $term;
+			}
+			if ($chunk) {
+				$terms[] = $chunk;
+			}
+			foreach($terms as &$phrase) {
+				$phrase = implode(' ', $phrase);
+			}
+		} else {
+			$terms = array_diff($terms, $this->stopWords[$lang]);
+		}
+		if (!$terms) {
+			$terms = array(implode(' ', $originalTerms));
+		}
+		if ($returnArray) {
+			return $terms;
+		}
+		return implode($sepeartor, $terms);
+	}
+
+/**
  * slug method
  *
  * For the given string, generate a slug. The replacements used are based on the mode setting, If tidy is false
