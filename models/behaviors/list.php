@@ -154,6 +154,7 @@ class ListBehavior extends ModelBehavior {
 			array_key_exists($sequence, $Model->data[$Model->alias]) && !$Model->data[$Model->alias][$sequence]) {
 			$edge = $this->__getMax($Model, $scope);
 			$Model->data[$Model->alias][$sequence] = $edge + 1;
+			$this->_addToWhitelist($Model, $sequence);
 		}
 		return true;
 	}
