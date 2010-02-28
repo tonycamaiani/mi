@@ -91,6 +91,8 @@ class TreeHelper extends AppHelper {
 	protected $_itemAttributes = array();
 
 	protected $_data = array();
+
+	protected $_parentData = array();
 /**
  * stack property
  *
@@ -142,6 +144,9 @@ class TreeHelper extends AppHelper {
  * @access public
  */
 	public function generate($data, $settings = array ()) {
+		if (!$data) {
+			return;
+		}
 		$this->set($data);
 		$settings = $this->_settings($settings);
 		if ($this->_settings['autoPath'] && !isset($this->_settings['autoPath'][2])) {
@@ -282,6 +287,10 @@ class TreeHelper extends AppHelper {
 
 	function set($data = array()) {
 		$this->_data = $data;
+		$key = key(current($data));
+		if (isset($data[0][$key]['lft'])) {
+			$this->_data = Set::combine($this->_data, "/$key/id", '/');
+		}
 		reset($this->_data);
 		$this->_stack = array();
 	}
@@ -343,6 +352,43 @@ class TreeHelper extends AppHelper {
 			'lastChild' => $lastChild,
 			'hasVisibleChildren' => $hasVisibleChildren
 		);
+	}
+
+	function display($row = array(), $seperator = ' » ', $model = null, $field = 'alias') {
+		$path = $this->path($row, $model);
+	}
+	function path($row = array(), $model = null) {
+		static $key;
+		if ($model) {
+			$key = $model;
+		} elseif (!$key) {
+			$_c = current($this->_data);
+			if (count($_c) === 1) (
+			}
+			$key = key();
+		}
+		if(is_array($row)) {
+		   	if (count($row) === 1) {
+				$row = current($row);
+			}
+		} else {
+			if (!isset($this->_data[$row])) {
+				return ' ???';
+			}
+			$row = current($this->_data[$row]);
+		}
+		$return[] = $row;
+		while($row['parent_id']) {
+			if (isset($this->_data[$row['parent_id']][$key])) {
+				$row = $this->_data[$row['parent_id']][$key];
+			} elseif (isset($this->_parentData[$row['parent_id']][$key])) {
+				$row = $this->_parentData[$row['parent_id']][$key];
+			} else {
+				break;
+			}
+			$return[] = $row;
+		}
+		return array_reverse($return);
 	}
 
 /**
