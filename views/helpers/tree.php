@@ -199,6 +199,7 @@ class TreeHelper extends AppHelper {
 				}
 			}
 			$elementData = $this->meta($result, $model, $depth);
+			$elementData['data'] = $row;
 			$this->_settings = array_merge($this->_settings, $elementData);
 			/* Main Content */
 			if ($element) {
