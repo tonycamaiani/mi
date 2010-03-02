@@ -56,6 +56,7 @@ class TreeHelper extends AppHelper {
 		'element' => false,
 		'callback' => false,
 		'autoPath' => false,
+		'parent' => 'parent_id',
 		'left' => 'lft',
 		'right' => 'rght',
 		'depth' => 0,
@@ -280,10 +281,19 @@ class TreeHelper extends AppHelper {
 		return $return;
 	}
 
-	function set($data = array()) {
+	function setData($data = array()) {
 		$this->_data = $data;
 		reset($this->_data);
 		$this->_stack = array();
+	}
+
+	function setParentData($data = array()) {
+		$this->_parentData = $data;
+		$key = key(current($data));
+		if (isset($data[0][$key]['lft'])) {
+			$this->_parentData = Set::combine($this->_parentData, "/$key/id", '/');
+		}
+		reset($this->_parentData);
 	}
 
 	function meta($row = array(), $model = null, $_depth = null) {
@@ -291,15 +301,17 @@ class TreeHelper extends AppHelper {
 		if ($model === null) {
 			$model = key($row);
 		}
-		if ($_depth === null) {
+		if (array_key_exists('depth', $row[$model])) {
+			$depth = $row[$model]['depth'];
+		} elseif ($_depth === null) {
 			while ($this->_stack && ($this->_stack[count($this->_stack)-1] < $row[$model][$right])) {
 				array_pop($this->_stack);
 			}
 		} else {
 			$depth = $_depth;
 		}
-		$i = key($this->_data);
 		$row = $row[$model];
+		$i = $row['id'];
 		/* Some useful vars */
 		$hasChildren = $firstChild = $lastChild = $hasVisibleChildren = false;
 		$numberOfDirectChildren = $numberOfTotalChildren = null;
@@ -319,23 +331,32 @@ class TreeHelper extends AppHelper {
 			if ($row[$left] != ($row[$right] - 1)) {
 				$hasChildren = true;
 				$numberOfTotalChildren = ($row[$right] - $row[$left] - 1) / 2;
-				if (isset($this->_data[$i + 1]) && $this->_data[$i + 1][$model][$right] < $row[$right]) {
-					$hasVisibleChildren = true;
+			}
+			if (isset($this->_data[$row[$parent]])) {
+				if ($this->_data[$row[$parent]][$model][$left] == ($row[$left] -1)) {
+					$firstChild = true;
+				}
+				if ($this->_data[$row[$parent]][$model][$right] == ($row[$right] +1)) {
+					$lastChild = true;
+				}
+			} elseif (isset($this->_parentData[$row[$parent]])) {
+				if ($this->_parentData[$row[$parent]][$model][$left] == ($row[$left] -1)) {
+					$firstChild = true;
+				}
+				if ($this->_parentData[$row[$parent]][$model][$right] == ($row[$right] +1)) {
+					$lastChild = true;
+				}
+			} else {
+				if (!isset($this->_data[$i - 1]) || ($this->_data[$i - 1][$model][$left] == ($row[$left] - 1))) {
+					$firstChild = true;
+				}
+				if (!isset($this->_data[$i + 1]) || ($this->_stack && $this->_stack[count($this->_stack) - 1] == ($row[$right] + 1))) {
+					$lastChild = true;
 				}
 			}
-			if (!isset($this->_data[$i - 1]) || ($this->_data[$i - 1][$model][$left] == ($row[$left] - 1))) {
-				$firstChild = true;
-			}
-			if (!isset($this->_data[$i + 1]) || ($this->_stack && $this->_stack[count($this->_stack) - 1] == ($row[$right] + 1))) {
-				$lastChild = true;
-			}
 		}
-		if ($_depth === null) {
-			$this->_stack[] = $row[$right];
-		}
-		next($this->_data);
 		return array(
-			'depth' => !empty($depth)?$depth:count($this->_stack),
+			'depth' => (int)$depth,
 			'hasChildren' => $hasChildren,
 			'numberOfDirectChildren' => $numberOfDirectChildren,
 			'numberOfTotalChildren' => $numberOfTotalChildren,
@@ -343,6 +364,45 @@ class TreeHelper extends AppHelper {
 			'lastChild' => $lastChild,
 			'hasVisibleChildren' => $hasVisibleChildren
 		);
+	}
+
+	function display($row = array(), $seperator = ' » ', $model = null, $field = 'alias') {
+		$path = $this->path($row, $model);
+	}
+
+	function path($row = array(), $model = null) {
+		static $key;
+		if ($model) {
+			$key = $model;
+		} elseif (!$key) {
+			$_c = current($this->_data);
+			if (count($_c) === 1 && is_array(current($_c))) {
+				$key = key($_c);
+			}
+		}
+
+		if(is_array($row)) {
+			if (is_array(current($row))) {
+				$row = current($row);
+			}
+		} else {
+			if (!isset($this->_data[$row])) {
+				return ' ???';
+			}
+			$row = current($this->_data[$row]);
+		}
+		$return[] = $row;
+		while($row['parent_id']) {
+			if (isset($this->_data[$row['parent_id']][$key])) {
+				$row = $this->_data[$row['parent_id']][$key];
+			} elseif (isset($this->_parentData[$row['parent_id']][$key])) {
+				$row = $this->_parentData[$row['parent_id']][$key];
+			} else {
+				break;
+			}
+			$return[] = $row;
+		}
+		return array_reverse($return);
 	}
 
 /**
