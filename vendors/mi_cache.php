@@ -461,7 +461,7 @@ class MiCache extends Object {
 		if ($success !== false) {
 			return $success;
 		}
-		if (!$_this->_Engine[$settings['engine']]->__setKey($settings['prefix'] . $key)) {
+		if (!$_this->_Engine[$settings['engine']]->_setKey($settings['prefix'] . $key)) {
 			return null;
 		}
 		return false;
@@ -529,18 +529,18 @@ class MiFileEngine extends FileEngine {
 			),
 			$settings
 		));
-		if (!isset($this->__File)) {
+		if (!isset($this->_File)) {
 			if (!class_exists('File')) {
 				require LIBS . 'file.php';
 			}
-			$this->__File = new File($this->settings['path'] . DS . 'cake');
+			$this->_File = new File($this->settings['path'] . DS . 'cake');
 		}
 
 		if (DIRECTORY_SEPARATOR === '\\') {
 			$this->settings['isWindows'] = true;
 		}
 
-		$this->settings['path'] = $this->__File->Folder->cd($this->settings['path']);
+		$this->settings['path'] = $this->_File->Folder->cd($this->settings['path']);
 
 		if (empty($this->settings['path'])) {
 			return false;
@@ -572,13 +572,13 @@ class MiFileEngine extends FileEngine {
  * @access public
  */
 	function clear($check = null) {
-		if (!$this->__init) {
+		if (!$this->_init) {
 			return false;
 		}
 
 		$dir = dirname($this->settings['path']);
 
-		if (DS !== '/') {
+		if (DS === '\\') {
 			$Folder = new Folder($dir);
 			$files = $Folder->findRecursive('(?!\\.|empty).*');
 			foreach($files as $file) {

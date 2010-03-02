@@ -150,10 +150,12 @@ class ListBehavior extends ModelBehavior {
 		if ($scope === false) {
 			return false;
 		}
-		if (!$Model->id && empty($Model->data[$Model->alias][$Model->primaryKey]) ||
-			array_key_exists($sequence, $Model->data[$Model->alias]) && !$Model->data[$Model->alias][$sequence]) {
+		if (($Model->id && !$Model->exists()) ||
+			(!$Model->id && empty($Model->data[$Model->alias][$Model->primaryKey])) ||
+			(array_key_exists($sequence, $Model->data[$Model->alias]) && !$Model->data[$Model->alias][$sequence])) {
 			$edge = $this->__getMax($Model, $scope);
 			$Model->data[$Model->alias][$sequence] = $edge + 1;
+			$this->_addToWhitelist($Model, $sequence);
 		}
 		return true;
 	}
@@ -382,12 +384,18 @@ class ListBehavior extends ModelBehavior {
 		$recursive = $this->settings[$Model->alias]['recursive'];
 		$sequence = $this->settings[$Model->alias]['sequence'];
 		$db =& ConnectionManager::getDataSource($Model->useDbConfig);
+		$_id = $Model->id;
+		$Model->id = null;
+
 		list($edge) = array_values($Model->find('first', array(
 			'conditions' => $scope,
 			'fields' => $db->calculate($Model, 'max', array($Model->alias . '.' . $sequence, 'edge')),
 			'recursive' => $recursive,
 			'order' => false
 		)));
+
+		$Model->id = $_id;
+
 		return ife(empty($edge['edge']), 0, $edge['edge']);
 	}
 
@@ -404,11 +412,17 @@ class ListBehavior extends ModelBehavior {
 		$sequence = $this->settings[$Model->alias]['sequence'];
 		extract($this->settings[$Model->alias]);
 		$db =& ConnectionManager::getDataSource($Model->useDbConfig);
+		$_id = $Model->id;
+		$Model->id = null;
+
 		list($edge) = array_values($Model->find('first', array(
 			'conditions' => $scope,
 			'fields' => $db->calculate($Model, 'min', array($sequence)),
 			'recursive' => $recursive
 		)));
+
+		$Model->id = $_id;
+
 		return ife(empty($edge[$sequence]), 0, $edge[$sequence]);
 	}
 
