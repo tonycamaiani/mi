@@ -4,7 +4,7 @@
  *
  * Long description for mi_db.php
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright (c) 2009, Andy Dawson
  *
@@ -86,7 +86,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function help()  {
+	public function help()  {
 		$exclude = array('main');
 		$shell = get_class_methods('Shell');
 		$methods = get_class_methods($this);
@@ -116,7 +116,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function startup() {
+	public function startup() {
 		$this->_welcome();
 		$this->db =& ConnectionManager::getDataSource($this->settings['connection']);
 		$name = $this->db->config['driver'];
@@ -133,7 +133,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function initialize() {
+	public function initialize() {
 		if (!empty($this->params['q']) || !empty($this->params['quiet']) || !empty($this->params['-quiet'])) {
 			$this->settings['quiet'] = true;
 		}
@@ -201,7 +201,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function main() {
+	public function main() {
 		return $this->help();
 	}
 
@@ -211,7 +211,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function backup() {
+	public function backup() {
 		$settings = array();
 		if (empty($this->settings['toFile'])) {
 			$settings['toFile'] = $this->_backupName(CONFIGS . 'schema' . DS . 'backups' . DS . $this->settings['connection']);
@@ -229,7 +229,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function save() {
+	public function save() {
 		$settings = array();
 		if (empty($settings['toFile'])) {
 			$settings['toFile'] = CONFIGS . 'schema' . DS . $this->settings['connection'];
@@ -250,7 +250,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function stripAutoIncrement($settings = array()) {
+	public function stripAutoIncrement($settings = array()) {
 		if (!empty($settings['toFile'])) {
 			$file = $settings['toFile'];
 		} else {
@@ -278,7 +278,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function stripComments($settings = array()) {
+	public function stripComments($settings = array()) {
 		if (!empty($settings['toFile'])) {
 			$file = $settings['toFile'];
 		} else {
@@ -305,7 +305,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function dump() {
+	public function dump() {
 		$this->_run('dump');
 	}
 
@@ -315,7 +315,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function import() {
+	public function import() {
 		$file = '';
 		if (isset($this->params['file'])) {
 			$file = $this->params['file'];
@@ -346,7 +346,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access public
  */
-	function compare() {
+	public function compare() {
 		$to = '_current_';
 		if (!empty($this->args[1])) {
 			$from = $this->args[0];
@@ -391,7 +391,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access protected
  */
-	function _run($friendlyName = '', $commandName = null, $version = null, $settings = array()) {
+	protected function _run($friendlyName = '', $commandName = null, $version = null, $settings = array()) {
 		$settings = array_merge($this->settings, $settings);
 		if (!$commandName) {
 			$commandName = $friendlyName;
@@ -441,7 +441,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access protected
  */
-	function _welcome() {
+	protected function _welcome() {
 		if ($this->settings['quiet']) {
 			return;
 		}
@@ -457,7 +457,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access protected
  */
-	function _command($string, $replacements, $name, $settings = array()) {
+	protected function _command($string, $replacements, $name, $settings = array()) {
 		$settings = array_merge($this->settings, $settings);
 		$replacements = am($settings, $replacements, $settings['commands'][$name]);
 		foreach($replacements as $key => &$value) {
@@ -480,7 +480,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access protected
  */
-	function _out($command, $settings = array()) {
+	protected function _out($command, $settings = array()) {
 		$settings = array_merge($this->settings, $settings);
 		if (!empty($settings['debug'])) {
 			$this->out($command);
@@ -505,7 +505,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access protected
  */
-	function _backupName($name) {
+	protected function _backupName($name) {
 		$name .= '_' . date('ymd-H') . str_pad((int)(date('i') / 10) * 10, 2, '0');
 		$dir = dirname($name);
 		if (!is_dir($dir)) {

@@ -4,7 +4,7 @@
  *
  * Long description for mi.php
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright (c) 2008, Andy Dawson
  *
@@ -36,7 +36,7 @@ class MiShell extends Shell {
  * @access public
  * @return void
  */
-	function help() {
+	public function help() {
 		$this->out('Mi. A utility for finding out information about your application. Usage:');
 		if (!empty($this->args[0])) {
 			switch (low($this->args[0])) {
@@ -138,7 +138,7 @@ class MiShell extends Shell {
  * @access public
  * @return void
  */
-	function initialize() {
+	public function initialize() {
 		return true;
 	}
 
@@ -148,7 +148,7 @@ class MiShell extends Shell {
  * @access public
  * @return void
  */
-	function main() {
+	public function main() {
 		$shortKeys = array('e' => 'exclude');
 		foreach ($this->params as $key => $value) {
 			if (in_array($key, array('app', 'root', 'working'))) {
@@ -221,7 +221,7 @@ class MiShell extends Shell {
  * @return void
  * @access protected
  */
-	function _controllers($what) {
+	protected function _controllers($what) {
 		$this->out($what . ' for which controller?');
 		$controllers = array_values(MiCache::mi('controllers'));
 		foreach ($controllers as $i => $controller) {
@@ -249,7 +249,7 @@ class MiShell extends Shell {
  * @return void
  * @access protected
  */
-	function _connections() {
+	protected function _connections() {
 		$this->out('Which connection do you want to see?');
 		$sources =& ConnectionManager::enumConnectionObjects();
 		$sources = array_keys($sources);
@@ -281,7 +281,7 @@ class MiShell extends Shell {
  * @return void
  * @access protected
  */
-	function _choice() {
+	protected function _choice() {
 		$this->out('What do you want to see?');
 		$options = array(
 			'c' => '[C]ontrollers',

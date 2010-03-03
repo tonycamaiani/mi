@@ -1,10 +1,8 @@
 <?php
 /**
- * Short description for clear.php
+ * A shell and static vendor class for deleting files
  *
- * Long description for clear.php
- *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * Copyright (c) 2008, Andy Dawson
  *
@@ -18,7 +16,6 @@
  * @since         v 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-uses('Folder','File');
 
 /**
  * ClearShell class
@@ -30,6 +27,15 @@ uses('Folder','File');
 class ClearShell extends Shell {
 
 /**
+ * settings property
+ *
+ * @var array
+ * @access public
+ */
+	public $settings = array(
+	);
+
+/**
  * excludePattern property
  *
  * Files and or folders (it matches against the full path) to ignore
@@ -37,7 +43,7 @@ class ClearShell extends Shell {
  * @var string '/^iffullpathmatchesthisdon'tdelete$/i'
  * @access public
  */
-	var $excludePattern = '/^.*\.svn.*$|^.*\.git.*$|.*empty$/i';
+	public $excludePattern = '/^.*\.svn.*$|^.*\.git.*$|.*empty$/i';
 
 /**
  * initialize method
@@ -45,7 +51,7 @@ class ClearShell extends Shell {
  * @access public
  * @return void
  */
-	function initialize() {
+	public function initialize() {
 		$this->settings = array(
 			'CACHE' => array(CACHE, true),
 			'css' => array(CSS, false),
@@ -64,7 +70,7 @@ class ClearShell extends Shell {
  * @return void
  * @access public
  */
-	function help() {
+	public function help() {
 		$this->out('cake clear - A shell for deleting temporary or cached files');
 		$this->out('Usage examples:');
 		$this->hr();
@@ -95,20 +101,20 @@ class ClearShell extends Shell {
  * @return void
  * @access public
  */
-	function main() {
+	public function main() {
 		if (!$this->args) {
 			return $this->help();
 		}
 		foreach ($this->args as $method) {
 			if ($method === '*') {
 				foreach($this->settings as $method => $settings) {
-					$this->out('looking at ' . $method);
+					$this->out('Looking at ' . $method);
 					list($where, $recursive) = $settings;
 					if ($recursive) {
-						$this->_clearRecursive($where);
+						Clear::recursive($where);
 						continue;
 					}
-					$this->_clear($where);
+					Clear::direct($where);
 				}
 				return;
 			}
@@ -119,65 +125,184 @@ class ClearShell extends Shell {
 			list($where, $recursive) = $this->settings[$method];
 			$this->out('Looking at ' . $method);
 			if ($recursive) {
-				$this->_clearRecursive($where);
+				Clear::recursive($where);
+				continue;
 			}
-			$this->_clear($where);
+			Clear::direct($where);
 		}
-	}
-
-/**
- * clear method
- *
- * Delete all files direclty in the folder. Intended to clear MiCompressor files
- *
- * @param mixed $folder null
- * @param string $pattern 'mi-.*\.(css|js)'
- * @return void
- * @access protected
- */
-	function _clear($folder = null, $pattern = '.*\.(css|js)') {
-		$pattern = Configure::read('MiCompressor.prefix') . $pattern;
-		if (!$folder) {
-			return;
-		}
-		$Folder = new Folder($folder);
-		$files = $Folder->find($pattern);
-		foreach ($files as $id => $file) {
-			if (!preg_match($this->excludePattern, $file)) {
-				$File = new File($folder . DS . $file);
-				if ($File->delete()) {
-					$this->out("\tSuccess Deleting: $file");
-				} else {
-					$this->out("\tError Deleting: $file");
-				}
-			}
-		}
-	}
-
-/**
- * clearRecursive method
- *
- * Delete all files (except the few matching the exclude pattern) in or below the passed path
- *
- * @param mixed $folder TMP
- * @return void
- * @access protected
- */
-	function _clearRecursive($folder = TMP) {
-		$Folder = new Folder($folder);
-		$files = $Folder->findRecursive();
-		foreach ($files as $id => $file) {
-			if (!preg_match($this->excludePattern, $file)) {
-				$File = new File($file);
-				$file = Debugger::trimPath($file);
-
-				if ($File->delete()) {
-					$this->out("\tSuccess Deleting: $file");
-				} else {
-					$this->out("\tError Deleting  : $file");
-				}
-			}
-		}
+		$this->out(Clear::messages());
 	}
 }
-?>
+
+/**
+ * Clear class
+ *
+ * @uses
+ * @package       mi
+ * @subpackage    mi.vendors.shells
+ */
+class Clear {
+
+/**
+ * settings property
+ *
+ * @var array
+ * @access public
+ */
+	public static $settings = array(
+		'useExec' => true,
+		'excludePattern' => '/^.*\.svn.*$|^.*\.git.*$|.*empty$/i'
+	);
+
+/**
+ * message stack
+ *
+ * @var array
+ * @access protected
+ */
+	protected static $_messages = array();
+
+/**
+ * Return the list of messages
+ *
+ * @return void
+ * @access public
+ */
+	public static function messages() {
+		$return = Clear::$_messages;
+		Clear::$_messages = array();
+		return $return;
+	}
+
+/**
+ * Delete all files (no pattern except not .svn and not named empty) under a folder
+ *
+ * @param mixed $path
+ * @return void
+ * @access public
+ */
+	public static function recursive($path) {
+		if (!$path) {
+			return false;
+		}
+		if (!is_dir($path)) {
+			Clear::$_messages[] = 'Path doesn\'t exist: ' . $path;
+			return false;
+		}
+		if (!is_writable($path)) {
+			Clear::$_messages[] = 'Path isn\'t writable: ' . $path;
+			return false;
+		}
+
+		if (Clear::$settings['useExec']) {
+			$cmd = "find $path -type f ! -iwholename \"*.svn*\" ! -name \"empty\" -exec rm -f {} \;";
+			if (Clear::exec($cmd)) {
+				Clear::$_messages[] = 'Successfully deleted all files in and under ' . $path;
+				return true;
+			}
+		}
+
+		uses('Folder','File');
+		$Folder = new Folder($path);
+		$files = $Folder->findRecursive();
+		return Clear::deleteFiles($files);
+	}
+
+/**
+ * Delete files in a folder matching a pattern
+ *
+ * @param mixed $path null
+ * @param string $pattern '.*\.(css|js)'
+ * @return void
+ * @access public
+ */
+	public static function direct($path = null, $pattern = '.*\.(css|js)') {
+		if (!$path) {
+			return false;
+		}
+		if (!is_dir($path)) {
+			Clear::$_messages[] = 'Path doesn\'t exist: ' . $path;
+			return false;
+		}
+		if (!is_writable($path)) {
+			Clear::$_messages[] = 'Path isn\'t writable: ' . $path;
+			return false;
+		}
+
+		if (Clear::$settings['useExec']) {
+			preg_match('#(.*)\((.*)\)#', $pattern, $matches);
+			list($_, $prefix, $extensions) = $matches;
+			$prefix = str_replace(array('.*', '\\'), array('*', ''), $prefix);
+			$parterns = array();
+			foreach(explode('|', $extensions) as $ext) {
+				$parterns[] = $prefix . $ext;
+			}
+			$return = null;
+			foreach($parterns as $partern) {
+				$cmd = "ls -f1 $path{$partern} | xargs rm";
+				if (!Clear::exec($cmd)) {
+					Clear::$_messages[] = 'Successfully deleted all files in ' . $path;
+					$return = false;
+					continue;
+				}
+				Clear::$_messages[] = 'Command succeeded ' . $cmd;
+				if ($return === null) {
+					$return = true;
+				}
+			}
+			if ($return) {
+				return true;
+			}
+		}
+
+		uses('Folder','File');
+		$Folder = new Folder($path);
+		$files = $Folder->find($pattern);
+		return Clear::deleteFiles($files);
+	}
+
+/**
+ * Delete files one by one in a loop (Windows)
+ *
+ * @param mixed $files
+ * @return bool
+ * @access protected
+ */
+	protected static function deleteFiles($files) {
+		$return = null;
+		foreach ($files as $id => $file) {
+			if (!preg_match(Clear::$settings['excludePattern'], $file)) {
+				$File = new File($path . DS . $file);
+				if ($File->delete()) {
+					Clear::$_messages[] = 'Success Deleting: ' . $file;
+				} else {
+					Clear::$_messages[] = 'Error Deleting  : ' . $file;
+					$return = false;
+				}
+			}
+		}
+		if ($return !== false) {
+			return true;
+		}
+		return false;
+	}
+
+/**
+ * exec method
+ *
+ * @param mixed $cmd
+ * @return bool
+ * @access protected
+ */
+	protected static function exec($cmd) {
+		exec($cmd, $_, $returnVar);
+		if (!$returnVar) {
+			return true;
+		}
+		Clear::$_messages[] = "Command failed: $cmd with return code $returnVar";
+		if ($_) {
+			Clear::$_messages += $_;
+		}
+		return false;
+	}
+}

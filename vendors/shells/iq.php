@@ -43,7 +43,7 @@ class IqShell extends Shell {
  * @access public
  * @return void
  */
-	function help() {
+	public function help() {
 		if (!empty($this->args[0])) {
 			switch (low($this->args[0])) {
 			case 'update':
@@ -107,7 +107,7 @@ class IqShell extends Shell {
  * @access public
  * @return void
  */
-	function initialize() {
+	public function initialize() {
 		if (!empty($this->params['q']) || !empty($this->params['quiet']) || !empty($this->params['-quiet'])) {
 			$this->settings['quiet'] = true;
 		}
@@ -120,7 +120,7 @@ class IqShell extends Shell {
  * @access public
  * @return void
  */
-	function main() {
+	public function main() {
 		if (!$this->args || isset($this->params['h'])) {
 			return $this->help();
 		}
@@ -143,7 +143,7 @@ class IqShell extends Shell {
  * @return void
  * @access public
  */
-	function install($id = null) {
+	public function install($id = null) {
 		if (!$id) {
 			if (!$this->args) {
 				$id = $this->_choosePackage();
@@ -191,7 +191,7 @@ class IqShell extends Shell {
  * @return void
  * @access public
  */
-	function remove() {
+	public function remove() {
 		if (!$this->args) {
 			$id = $this->_choosePackage('to remove', true);
 		} else {
@@ -222,7 +222,7 @@ class IqShell extends Shell {
  * @return void
  * @access public
  */
-	function check() {
+	public function check() {
 		$return = MiInstall::check();
 		if ($return === true) {
 			return $this->out('No missing dependencies found');
@@ -246,7 +246,7 @@ class IqShell extends Shell {
  * @return void
  * @access public
  */
-	function details() {
+	public function details() {
 		if (!$this->args) {
 			$id = $this->_choosePackage();
 		} else {
@@ -264,7 +264,7 @@ class IqShell extends Shell {
  * @return void
  * @access protected
  */
-	function _chooseBase($details = array(), $settings = array()) {
+	protected function _chooseBase($details = array(), $settings = array()) {
 		if (isset($settings['base'])) {
 			return $settings['base'];
 		}
@@ -317,7 +317,7 @@ class IqShell extends Shell {
  * @return void
  * @access protected
  */
-	function _choosePackage($action = 'to install', $installed = false) {
+	protected function _choosePackage($action = 'to install', $installed = false) {
 		if ($installed) {
 			$plugins = MiInstall::plugins();
 			foreach($plugins as $plugin) {
@@ -359,7 +359,7 @@ class IqShell extends Shell {
  * @return void
  * @access protected
  */
-	function _neatOut($out, $indent = '') {
+	protected function _neatOut($out, $indent = '') {
 		if (is_numeric($out)) {
 			return;
 		}
@@ -388,7 +388,7 @@ class IqShell extends Shell {
  * @return void
  * @access public
  */
-	function dbUpdate($id = null, $schema = null) {
+	public function dbUpdate($id = null, $schema = null) {
 		$options = array('name' => Inflector::camelize($id));
 		$Schema = $this->Schema->load($options);
 		if (!$Schema) {
@@ -417,7 +417,7 @@ class IqShell extends Shell {
  *
  * @access private
  */
-	function __update(&$Schema, $table = null) {
+	private function __update(&$Schema, $table = null) {
 		$db =& ConnectionManager::getDataSource($this->Schema->connection);
 
 		$this->out(__('Comparing Database to Schema...', true));
@@ -459,7 +459,7 @@ class IqShell extends Shell {
  *
  * @access private
  */
-	function __run($contents, $event, &$Schema) {
+	private function __run($contents, $event, &$Schema) {
 		if (empty($contents)) {
 			$this->err(__('Sql could not be run', true));
 			return;
@@ -497,7 +497,7 @@ class IqShell extends Shell {
  * @return void
  * @access protected
  */
-	function _welcome() {
+	protected function _welcome() {
 		if (!empty($this->settings['quiet'])) {
 			return;
 		}

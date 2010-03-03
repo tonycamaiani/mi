@@ -4,7 +4,7 @@
  *
  * Long description for mi_schema.php
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright (c) 2008, Andy Dawson
  *
@@ -37,7 +37,7 @@ class MiSchemaShell extends SchemaShell {
  * @return void
  * @access public
  */
-	function in() {
+	public function in() {
 		return 'y';
 	}
 }
