@@ -233,7 +233,7 @@ class MiFormHelper extends FormHelper {
 			'class' => 'autocomplete',
 			'source' => null,
 			'writeJs' => true
-		), $ac);
+		), (array)$ac);
 
 		$hiddenOptions = $this->_initInputField($fieldName, array('secure' => false));
 		$hidden = $this->hidden($fieldName, $hiddenOptions);
