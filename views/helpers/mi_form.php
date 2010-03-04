@@ -221,56 +221,86 @@ class MiFormHelper extends FormHelper {
  * @access public
  */
 	function select($fieldName, $options = array(), $selected = null, $attributes = array()) {
-		if (empty($options['--autocomplete--'])) {
+		$ac = array();
+		if (!empty($options['--autocomplete--'])) {
+			$ac = $options['--autocomplete--'];
+			unset($options['--autocomplete--']);
+		}
+		if (count($options) > 1 || $ac === false) {
 			return parent::select($fieldName, $options, $selected, $attributes);
 		}
+		$ac = array_merge(array(
+			'class' => 'autocomplete',
+			'source' => null,
+			'writeJs' => true
+		), $ac);
 
-		$hiddenOptions = $options + array('secure' => false);
+		$hiddenOptions = $this->_initInputField($fieldName, array('secure' => false));
 		$hidden = $this->hidden($fieldName, $hiddenOptions);
 
-		if (!empty($options['class'])) {
-			$options['class'] .= ' autocomplete';
-		} else {
-			$options['class'] = 'autocomplete';
+		if ($ac['class']) {
+			if (!empty($attributes['class'])) {
+				$attributes['class'] .= ' ' . $ac['class'];
+			} else {
+				$attributes['class'] = $ac['class'];
+			}
 		}
-		$options = $this->_initInputField($fieldName . '_auto', array_merge(
-			array('type' => 'text'), $options
+		$attributes = $this->_initInputField($fieldName . '_auto', array_merge(
+			array('type' => 'text'), $attributes
 		));
-		if (!empty($options['--autocomplete--']['display'])) {
-			$options['value'] = $options['--autocomplete--']['display'];
+
+		if (array_key_exists('label', $ac)) {
+			$attributes['value'] = $ac['label'];
+		} elseif ($selected && array_key_exists($selected, $options)) {
+			$attributes['value'] = $options[$selected];
+		} elseif (!empty($hiddenOptions['value']) && array_key_exists($hiddenOptions['value'], $options)) {
+			$attributes['value'] = $options[$hiddenOptions['value']];
+		} elseif ($hiddenOptions['value']) {
+			$attributes['value'] = '(' . $hiddenOptions['value'] . ')';
 		}
+
 		$input = sprintf(
 			$this->Html->tags['input'],
-			$options['name'],
-			$this->_parseAttributes($options, array('name'), null, ' ')
+			$attributes['name'],
+			$this->_parseAttributes($attributes, array('name'), null, ' ')
 		);
 
-		if (empty($options['--autocomplete--']['source'])) {
-			if (substr($fieldName, -3) == '_id') {
-				$fieldName = substr($fieldName, 0, strlen($fieldName) - 3);
-			}
-			$controller = Inflector::pluralize($fieldName);
-			$source = '"' . $this->url(array('controller' => $controller, 'action' => 'lookup')) . '"';
-		} else {
-			$source = $options['--autocomplete--']['source'];
-			if (is_array($source) && !isset($source['action'])) {
-				$source = json_encode($source, true);
+		if ($ac['writeJs']) {
+			if (!empty($ac['source'])) {
+				$source = $ac['source'];
+				if (is_array($source) && !isset($source['action'])) {
+					$source = json_encode($source, true);
+				} else {
+					$source = '"' . $this->url($source) . '"';
+				}
 			} else {
-				$source = '"' . $this->url($source) . '"';
+				if (substr($fieldName, -3) == '_id') {
+					$fieldName = substr($fieldName, 0, strlen($fieldName) - 3);
+				}
+				$controller = Inflector::pluralize($fieldName);
+				$source = '"' . $this->url(array('controller' => $controller, 'action' => 'lookup')) . '"';
 			}
-		}
-		if (isset($this->Asset)) {
-			$this->Asset->js('jquery-ui', $this->name);
-			$this->Asset->codeBlock(
-				'$(document).ready(function() {
-					$("#' . $options['id'] . '").autocomplete({
-							minLength: 3,
-							source: ' . $source . ',
-							change: function(event, ui) { }
-						});
-				});',
-				array('inline' => false)
-			);
+
+			if (isset($this->Asset)) {
+				$this->Asset->js('jquery-ui', $this->name);
+				$this->Asset->codeBlock(
+					'$(document).ready(function() {
+						$("#' . $attributes['id'] . '").autocomplete({
+								minLength: 3,
+								source: ' . $source . ',
+								change: function(event, ui) {
+									if ($("#' . $attributes['id'] . '").text() == "") {
+										$("#' . $hiddenOptions['id'] . '").val("");
+									}
+								},
+								select: function(event, ui) {
+									$("#' . $hiddenOptions['id'] . '").val(ui.item.id);
+									$("#' . $attributes['id'] . '").text(ui.item.label);
+								}
+							});
+					});'
+				);
+			}
 		}
 		return $hidden . $input;
 	}
