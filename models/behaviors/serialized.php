@@ -93,6 +93,9 @@ class SerializedBehavior extends ModelBehavior {
  */
 	function afterFind(&$Model, $results) {
 		$this->_fields($Model);
+		if (!isset($results[0][$Model->alias])) {
+			return;
+		}
 		$fields = array_keys(array_intersect_key($results[0][$Model->alias], $this->settings[$Model->name]['fields']));
 		if (!$fields) {
 			return true;

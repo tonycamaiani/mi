@@ -209,4 +209,69 @@ class MiFormHelper extends FormHelper {
 		}
 		return parent::label($fieldName, $text, $attributes);
 	}
+
+/**
+ * select - or autocomplete
+ *
+ * @param mixed $fieldName
+ * @param array $options array()
+ * @param mixed $selected null
+ * @param array $attributes array()
+ * @return void
+ * @access public
+ */
+	function select($fieldName, $options = array(), $selected = null, $attributes = array()) {
+		if (empty($options['--autocomplete--'])) {
+			return parent::select($fieldName, $options, $selected, $attributes);
+		}
+
+		$hiddenOptions = $options + array('secure' => false);
+		$hidden = $this->hidden($fieldName, $hiddenOptions);
+
+		if (!empty($options['class'])) {
+			$options['class'] .= ' autocomplete';
+		} else {
+			$options['class'] = 'autocomplete';
+		}
+		$options = $this->_initInputField($fieldName . '_auto', array_merge(
+			array('type' => 'text'), $options
+		));
+		if (!empty($options['--autocomplete--']['display'])) {
+			$options['value'] = $options['--autocomplete--']['display'];
+		}
+		$input = sprintf(
+			$this->Html->tags['input'],
+			$options['name'],
+			$this->_parseAttributes($options, array('name'), null, ' ')
+		);
+
+		if (empty($options['--autocomplete--']['source'])) {
+			if (substr($fieldName, -3) == '_id') {
+				$fieldName = substr($fieldName, 0, strlen($fieldName) - 3);
+			}
+			$controller = Inflector::pluralize($fieldName);
+			$source = '"' . $this->url(array('controller' => $controller, 'action' => 'lookup')) . '"';
+		} else {
+			$source = $options['--autocomplete--']['source'];
+			if (is_array($source) && !isset($source['action'])) {
+				$source = json_encode($source, true);
+			} else {
+				$source = '"' . $this->url($source) . '"';
+			}
+		}
+		if (isset($this->Asset)) {
+			$this->Asset->js('jquery-ui', $this->name);
+			$this->Asset->codeBlock(
+				'$(document).ready(function() {
+					$("#' . $options['id'] . '").autocomplete({
+							minLength: 3,
+							source: ' . $source . ',
+							change: function(event, ui) { }
+						});
+				});',
+				array('inline' => false)
+			);
+		}
+		return $hidden . $input;
+	}
 }
