@@ -264,7 +264,6 @@ class MiFormHelper extends FormHelper {
 			$attributes['name'],
 			$this->_parseAttributes($attributes, array('name'), null, ' ')
 		);
-
 		if ($ac['writeJs']) {
 			if (!empty($ac['source'])) {
 				$source = $ac['source'];
@@ -277,6 +276,15 @@ class MiFormHelper extends FormHelper {
 				if (substr($fieldName, -3) == '_id') {
 					$fieldName = substr($fieldName, 0, strlen($fieldName) - 3);
 				}
+				if (strpos($fieldName, '.') && $fieldName[0] = strtoupper($fieldName[0])) {
+					$bits = explode('.', $fieldName);
+					array_shift($bits);
+					$fieldName = array_shift($bits);
+					if ($bits && is_numeric($fieldName)) {
+						$fieldName = array_shift($bits);
+					}
+				}
+
 				$controller = Inflector::pluralize($fieldName);
 				$source = '"' . $this->url(array('controller' => $controller, 'action' => 'lookup')) . '"';
 			}
