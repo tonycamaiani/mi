@@ -497,7 +497,7 @@ class IqShell extends Shell {
  * @return void
  * @access protected
  */
-	protected function _welcome() {
+	public function _welcome() {
 		if (!empty($this->settings['quiet'])) {
 			return;
 		}
