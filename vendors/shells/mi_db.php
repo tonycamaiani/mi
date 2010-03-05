@@ -441,7 +441,7 @@ class MiDbShell extends Shell {
  * @return void
  * @access protected
  */
-	protected function _welcome() {
+	public function _welcome() {
 		if ($this->settings['quiet']) {
 			return;
 		}
