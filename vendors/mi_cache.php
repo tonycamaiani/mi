@@ -123,7 +123,7 @@ class MiCache extends Object {
 			MiCache::$setting = $name;
 		}
 		MiCache::$settings[$name] = am($_defaults, $config);
-		if (MiCache::$settings[$name]['path'][0] != '/') {
+		if (MiCache::$settings[$name]['path'][0] !== '/' || (DS === '\\' && MiCache::$settings[$name]['path'][1] !== ':')) {
 			MiCache::$settings[$name]['path'] = CACHE . MiCache::$settings[$name]['path'];
 		}
 		if (in_array(MiCache::$settings[$name]['engine'], array('File', 'MiFile')) && !is_dir(MiCache::$settings[$name]['path'])) {
@@ -546,8 +546,7 @@ class MiFileEngine extends FileEngine {
 			return false;
 		}
 
-		$dir = dirname($this->settings['path']);
-
+		$dir = $this->settings['path'];
 		if (DS === '\\') {
 			$Folder = new Folder($dir);
 			$files = $Folder->findRecursive('(?!\\.|empty).*');
